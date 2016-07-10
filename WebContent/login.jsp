@@ -73,12 +73,12 @@
 <!-- 테스트용 테이블 -->
 
 <table width="400" border="1">
-	<tr>
-		<th>아이디</th>
-		<th>암호</th>
-		<th>별명</th>
-		<th>나이</th>
-	</tr>
+<tr>
+	<th>아이디</th>
+	<th>암호</th>
+	<th>별명</th>
+	<th>나이</th>
+</tr>
 	
 <%
 	try {
