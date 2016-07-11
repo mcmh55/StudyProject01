@@ -3,8 +3,7 @@
 <%@ page import = "java.sql.Statement" %>
 <%@ page import = "java.sql.Connection" %>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 
 <%!	// 선언부는 첫 방문자에 의해서 단 한번 수행
 	Connection conn = null;
@@ -23,23 +22,26 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>로그인</title>
 
-<link rel="stylesheet" type="text/css" href="css/style_login.css">
+<link rel="stylesheet" type="text/css" href="css/Login.css">
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
-<script src="js/login.js"></script>
+<script src="js/Login.js" type="text/javascript"></script>
 
 </head>
 <body>
 
-<form action="login.do" method="post" name="frm_login">
+<form action="login_do" method="post" name="frm_login">
 <!-- 로그인 영역 -->
 <div class="box">
 
 <h1>환영합니다!</h1>
 
 <!-- 입력 -->
-<input type="text" name="input_login_id" class="input" value="아이디 입력" onFocus="fieldFocus(this, '아이디 입력');" onblur="fieldBlur(this, '아이디 입력');"/>
-<input type="password" name="input_login_pw" class="input" value="password" onFocus="fieldFocus(this, 'password');" onblur="fieldBlur(this, 'password');"/>
+<input type="text" name="input_login_id" class="input" value="아이디 입력" 
+			onFocus="fieldFocus(this, '아이디 입력');" onblur="fieldBlur(this, '아이디 입력');"/>
+			
+<input type="password" name="input_login_pw" class="input" value="password"
+			onFocus="fieldFocus(this, 'password');" onblur="fieldBlur(this, 'password');"/>
 <!-- //입력 -->
 <br><br>
 
@@ -56,10 +58,10 @@
 
 <!-- 버튼 -->
 <div>
-<button type="button" class="btn_join" onclick="location.href='join.do'">회원가입</button>
+<input type="button" class="btn_join" value="회원가입" onclick="location.href='join_do'"/>
 </div>
 <div>
-<input type="submit" id="btn_login" class="btn_login" value="로그인" onclick="return loginEmptyCheck()">
+<input type="submit" id="btn_login" class="btn_login" value="로그인" onclick="return checkInputEmptyLogin()">
 </div>
 <!-- //버튼 -->
 

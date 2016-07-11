@@ -92,3 +92,8 @@ h1{
 #btn2:hover{ 
 background:#3594D2; 
 }
+
+#msg{
+	font-weight:bold;
+	color:red;
+}
