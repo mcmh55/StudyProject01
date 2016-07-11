@@ -1,16 +1,5 @@
-/*
-function joinCheck(){
-	window.open("join_confirm.jsp", "jcfViewer", "width=400, height=400");
-	var frm = document.frm_join;
-	frm.action = "join_confirm.jsp";
-	frm.target = "jcfViewer";
-	frm.method = "post";
-	frm.submit();
-}
-*/
-
 // 공백 체크
-function joinEmptyCheck() {
+function checkInputEmptyJoin() {
 	
 	var inputID = document.frm_join.input_join_id;
 	var inputPW = document.frm_join.input_join_pw;
