@@ -1,7 +1,7 @@
 package DB;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
+//import java.sql.DriverManager;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -9,15 +9,6 @@ import javax.sql.DataSource;
 
 public class DBconn {
 
-	public static Connection conn;
-	
-	// 싱글톤 패턴: 단일 객체
-	private static DBconn instance = new DBconn();
-	public static DBconn getInstance() {
-		
-		return instance;
-	}
-	
 	public static Connection getConnection() throws Exception {
 		
 		/*
@@ -31,7 +22,7 @@ public class DBconn {
 		*/
 		
 		// 커넥션 풀 처리 사용
-		conn = null;
+		Connection conn = null;
 		Context initContext = new InitialContext();
 		Context envContext = (Context) initContext.lookup("java:/comp/env");
 		DataSource ds = (DataSource) envContext.lookup("jdbc/myoracle");
