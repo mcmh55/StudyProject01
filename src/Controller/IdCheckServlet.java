@@ -17,7 +17,7 @@ public class IdCheckServlet extends HttpServlet {
 		String inputID = request.getParameter("input_join_id");
 		
 		MemberDAO mdao = MemberDAO.getInstance();
-		int result = mdao.idCheck(inputID);
+		int result = mdao.checkId(inputID);
 		
 		request.setAttribute("userid", inputID);
 		request.setAttribute("result", result);
