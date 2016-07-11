@@ -1,5 +1,6 @@
 package DAO;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -7,9 +8,6 @@ import DB.DBconn;
 import DTO.MemberDTO;
 
 public class MemberDAO {
-	
-	private PreparedStatement pstmt;
-	private ResultSet rs;
 	
 	// 싱글톤 패턴: 단일 객체
 	private static MemberDAO instance = new MemberDAO();
@@ -19,24 +17,25 @@ public class MemberDAO {
 	}
 	
 /*
- * [유저가 DB에 존재하는지 확인]
+ * [입력한 아이디가 DB에 존재하는지 확인]
  * 입력한 아이디, 암호와 DB의 아이디, 암호와 비교
  * 아이디=불일치			'-1'을 리턴
  * 아이디=일치, 암호=불일치	'0'을 리턴
  * 아이디=일치, 암호=일치		'1'을 리턴
  */
-	public int userCheck(String inputID, String inputPW) {
+	public int checkUser(String inputID, String inputPW) {
 		
 		int result = -1;
 		String sql = "SELECT PW FROM TEST_MEMBER WHERE ID = ?";
 		
-		DBconn db = DBconn.getInstance();
-		pstmt = null;
-		rs = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		
 		try {
 			
-			pstmt = db.getConnection().prepareStatement(sql);
+			conn = DBconn.getConnection();
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, inputID);
 			rs = pstmt.executeQuery();
 			
@@ -58,7 +57,7 @@ public class MemberDAO {
 				
 				if ( rs != null ) 		rs.close();
 				if ( pstmt != null ) 	pstmt.close();
-				if ( db.conn != null ) 	db.conn.close();
+				if ( conn != null ) 	conn.close();
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -74,13 +73,15 @@ public class MemberDAO {
 		MemberDTO mdto = null;
 		String sql = "SELECT * FROM TEST_MEMBER" + "\n"
 					+ "WHERE ID = ?";
-		DBconn db = DBconn.getInstance();
-		pstmt = null;
-		rs = null;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		
 		try {
 			
-			pstmt = db.getConnection().prepareStatement(sql);
+			conn = DBconn.getConnection();
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, inputID);
 			rs = pstmt.executeQuery();
 			
@@ -100,7 +101,7 @@ public class MemberDAO {
 				
 				if ( rs != null ) 		rs.close();
 				if ( pstmt != null ) 	pstmt.close();
-				if ( db.conn != null ) 	db.conn.close();
+				if ( conn != null ) 	conn.close();
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -116,17 +117,19 @@ public class MemberDAO {
  * 존재	'1'을 리턴
  * 없음	'-1'을 리턴
  */
-	public int idCheck(String inputID) {
+	public int checkId(String inputID) {
 		
 		int result = -1;
 		String sql = "SELECT ID FROM TEST_MEMBER WHERE ID = ?";
-		DBconn db = DBconn.getInstance();
-		pstmt = null;
-		rs = null;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		
 		try {
 			
-			pstmt = db.getConnection().prepareStatement(sql);
+			conn = DBconn.getConnection();
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, inputID);
 			rs = pstmt.executeQuery();
 			
@@ -143,7 +146,7 @@ public class MemberDAO {
 				
 				if ( rs != null ) 		rs.close();
 				if ( pstmt != null ) 	pstmt.close();
-				if ( db.conn != null ) 	db.conn.close();
+				if ( conn != null ) 	conn.close();
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -157,12 +160,14 @@ public class MemberDAO {
 		
 		int result = -1;
 		String sql = "INSERT INTO TEST_MEMBER VALUES(?, ?, ?, ?)";
-		DBconn db = DBconn.getInstance();
-		pstmt = null;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
 		
 		try {
 			
-			pstmt = db.getConnection().prepareStatement(sql);
+			conn = DBconn.getConnection();
+			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, mdto.getId());
 			pstmt.setString(2, mdto.getPw());
@@ -177,7 +182,7 @@ public class MemberDAO {
 			try {
 				
 				if ( pstmt != null )	pstmt.close();
-				if ( db.conn != null )	db.conn.close();
+				if ( conn != null )		conn.close();
 				
 			} catch (Exception e) {
 				e.printStackTrace();
