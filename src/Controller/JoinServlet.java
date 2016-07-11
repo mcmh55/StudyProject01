@@ -13,14 +13,14 @@ import javax.servlet.http.HttpSession;
 import DAO.MemberDAO;
 import DTO.MemberDTO;
 
-@WebServlet("/join.do")
+@WebServlet("/join_do")
 public class JoinServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	// 로그인 페이지에서 '회원가입'버튼으로 진입할 경우
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("join.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("member/Join.jsp");
 		dispatcher.forward(request, response);
 		
 	}
@@ -30,11 +30,11 @@ public class JoinServlet extends HttpServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		
-		String url = "join.jsp";
+		String url = "member/Join.jsp";
 		String inputID = request.getParameter("input_join_id");
 		
 		MemberDAO mdao = MemberDAO.getInstance();
-		int result = mdao.idCheck(inputID);		// 아이디 중복 체크
+		int result = mdao.checkId(inputID);		// 아이디 중복 체크
 		
 		switch ( result ) {
 		case 1:
@@ -62,7 +62,7 @@ public class JoinServlet extends HttpServlet {
 				session.setAttribute("userid", mdto.getId());				
 			}
 			
-			url = "login.jsp";
+			url = "member/Login.jsp";
 			break;
 		}
 		
