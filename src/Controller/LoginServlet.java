@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet{
 		String inputPW = request.getParameter("input_login_pw");
 		
 		MemberDAO mdao = MemberDAO.getInstance();
-		int result = mdao.checkUser(inputID, inputPW);
+		int result = mdao.checkMember(inputID, inputPW);
 		
 		switch ( result ) {
 		case -1:

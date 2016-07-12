@@ -23,7 +23,7 @@ public class MemberDAO {
  * 아이디=일치, 암호=불일치	'0'을 리턴
  * 아이디=일치, 암호=일치		'1'을 리턴
  */
-	public int checkUser(String inputID, String inputPW) {
+	public int checkMember(String inputID, String inputPW) {
 		
 		int result = -1;
 		String sql = "SELECT PW FROM TEST_MEMBER WHERE ID = ?";
