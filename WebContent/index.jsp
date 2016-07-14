@@ -8,10 +8,8 @@
 </head>
 <body>
 
-<%
-	//내용이 없기 때문에 로그인 페이지로 변경 ※ 이동x
-	response.sendRedirect("login_do");
-%>
+	<!-- 내용이 없기 때문에 로그인 페이지로 변경 ※ 이동x -->
+<%	response.sendRedirect("login_do"); %>
 
 </body>
 </html>
