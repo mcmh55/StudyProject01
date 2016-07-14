@@ -18,11 +18,16 @@ public class LoginServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("member/Login.jsp");
+		
+		String url = "member/Login.jsp";
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
+		
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String url = "member/Login.jsp";
 		
 		// 'login.jsp'에서 입력받은 아이디, 암호를 받아옴
@@ -33,28 +38,30 @@ public class LoginServlet extends HttpServlet{
 		int result = mdao.checkMember(inputID, inputPW);
 		
 		switch ( result ) {
+		
 		case -1:
-			request.setAttribute("message", "존재하지 않는 회원입니다.");
-			break;
-			
-		case 0:
 			request.setAttribute("message", "비밀번호가 맞지 않습니다.");
+			break;
+		
+		case 0:
+			request.setAttribute("message", "존재하지 않는 회원입니다.");
 			break;
 			
 		case 1:
 			
-			MemberDTO mdto = mdao.getMember(inputID);
+			MemberDTO memdto = mdao.getMember(inputID);
 			HttpSession session = request.getSession();
 			
 			// 다른 사이트로 이동하더라도 로그인 상태를 유지하기 위해 'session'에 회원 정보를 저장
-			session.setAttribute("loginUser", mdto);
+			session.setAttribute("loginUser", memdto);
 			request.setAttribute("message", "로그인 성공!");
-			url = "bbs/BoardList.jsp";
+			url = "bbsList_do";
 			
 			break;
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
+		
 	}
 }
