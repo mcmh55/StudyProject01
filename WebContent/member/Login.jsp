@@ -5,17 +5,6 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 
-<%!	// 선언부는 첫 방문자에 의해서 단 한번 수행
-	Connection conn = null;
-	Statement stmt = null;
-	ResultSet rs = null;
-	
-	String url = "jdbc:oracle:thin:@localhost:1521:xe";
-	String id = "hr";
-	String pw = "hr";
-	String sql = "SELECT * FROM TEST_MEMBER";
-%>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -29,6 +18,17 @@
 
 </head>
 <body>
+
+<%!	// 선언부는 첫 방문자에 의해서 단 한번 수행
+	Connection conn = null;
+	Statement stmt = null;
+	ResultSet rs = null;
+	
+	String url = "jdbc:oracle:thin:@localhost:1521:xe";
+	String id = "hr";
+	String pw = "hr";
+	String sql = "SELECT * FROM TEST_MEMBER";
+%>
 
 <form action="login_do" method="post" name="frm_login">
 <!-- 로그인 영역 -->
