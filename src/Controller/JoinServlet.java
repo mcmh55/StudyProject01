@@ -37,11 +37,12 @@ public class JoinServlet extends HttpServlet {
 		int result = mdao.checkId(inputID);		// 아이디 중복 체크
 		
 		switch ( result ) {
+		
 		case 1:
 			request.setAttribute("message", "이미 존재하는 회원입니다.");
 			break;
 			
-		case -1:
+		case 0:
 			
 			String id = request.getParameter("input_join_id");
 			String pw = request.getParameter("input_join_pw");
@@ -54,7 +55,7 @@ public class JoinServlet extends HttpServlet {
 			mdto.setNick(nick);
 			mdto.setAge(Integer.parseInt(age));
 			
-			result = mdao.insertMember(mdto);
+			result = mdao.addMember(mdto);
 			
 			HttpSession session = request.getSession();
 			
@@ -68,5 +69,6 @@ public class JoinServlet extends HttpServlet {
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
+		
 	}
 }
