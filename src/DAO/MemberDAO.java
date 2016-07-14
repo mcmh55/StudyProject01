@@ -3,8 +3,9 @@ package DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
-import DB.DBconn;
+import DB.DBControll;
 import DTO.MemberDTO;
 
 public class MemberDAO {
@@ -25,43 +26,35 @@ public class MemberDAO {
  */
 	public int checkMember(String inputID, String inputPW) {
 		
-		int result = -1;
+		int result = 0;
 		String sql = "SELECT PW FROM TEST_MEMBER WHERE ID = ?";
 		
 		Connection conn = null;
-		PreparedStatement pstmt = null;
+		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		
 		try {
 			
-			conn = DBconn.getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, inputID);
-			rs = pstmt.executeQuery();
+			conn = DBControll.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, inputID);
+			rs = psmt.executeQuery();
 			
 			if ( rs.next() ) {
 				
 				if ( rs.getString("PW") != null && rs.getString("PW").equals(inputPW) ) {
 					result = 1;
 				} else {
-					result = 0;
+					result = -1;
 				}
 				
 			} else {
-				result = -1;
+				result = 0;
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				
-				if ( rs != null ) 		rs.close();
-				if ( pstmt != null ) 	pstmt.close();
-				if ( conn != null ) 	conn.close();
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			DBControll.closeDatabase(conn, psmt, rs);
 		}
 		
 		return result;
@@ -75,15 +68,15 @@ public class MemberDAO {
 					+ "WHERE ID = ?";
 		
 		Connection conn = null;
-		PreparedStatement pstmt = null;
+		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		
 		try {
 			
-			conn = DBconn.getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, inputID);
-			rs = pstmt.executeQuery();
+			conn = DBControll.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, inputID);
+			rs = psmt.executeQuery();
 			
 			if ( rs.next() ) {
 				
@@ -97,15 +90,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				
-				if ( rs != null ) 		rs.close();
-				if ( pstmt != null ) 	pstmt.close();
-				if ( conn != null ) 	conn.close();
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			DBControll.closeDatabase(conn, psmt, rs);
 		}
 		
 		return mdto;
@@ -115,78 +100,63 @@ public class MemberDAO {
  * [아이디가 DB에 존재하는지 확인]
  * 입력한 아이디와 DB의 아이디와 비교
  * 존재	'1'을 리턴
- * 없음	'-1'을 리턴
+ * 없음	'0'을 리턴
  */
 	public int checkId(String inputID) {
 		
-		int result = -1;
+		int result = 0;
 		String sql = "SELECT ID FROM TEST_MEMBER WHERE ID = ?";
 		
 		Connection conn = null;
-		PreparedStatement pstmt = null;
+		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		
 		try {
 			
-			conn = DBconn.getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, inputID);
-			rs = pstmt.executeQuery();
+			conn = DBControll.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, inputID);
+			rs = psmt.executeQuery();
 			
 			if ( rs.next() ) {
 				result = 1;
 			} else {
-				result = -1;
+				result = 0;
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				
-				if ( rs != null ) 		rs.close();
-				if ( pstmt != null ) 	pstmt.close();
-				if ( conn != null ) 	conn.close();
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			DBControll.closeDatabase(conn, psmt, rs);
 		}
 		
 		return result;
 	}
 	
-	public int insertMember(MemberDTO mdto) {
+	public int addMember(MemberDTO mdto) {
 		
 		int result = -1;
 		String sql = "INSERT INTO TEST_MEMBER VALUES(?, ?, ?, ?)";
 		
 		Connection conn = null;
-		PreparedStatement pstmt = null;
+		PreparedStatement psmt = null;
 		
 		try {
 			
-			conn = DBconn.getConnection();
-			pstmt = conn.prepareStatement(sql);
+			conn = DBControll.getConnection();
+			psmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, mdto.getId());
-			pstmt.setString(2, mdto.getPw());
-			pstmt.setString(3, mdto.getNick());
-			pstmt.setInt(4, mdto.getAge());
+			psmt.setString(1, mdto.getId());
+			psmt.setString(2, mdto.getPw());
+			psmt.setString(3, mdto.getNick());
+			psmt.setInt(4, mdto.getAge());
 			
-			result = pstmt.executeUpdate();
+			result = psmt.executeUpdate();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				
-				if ( pstmt != null )	pstmt.close();
-				if ( conn != null )		conn.close();
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			DBControll.closeDatabase(conn, psmt, null);
 		}
 		
 		return result;
