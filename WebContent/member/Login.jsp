@@ -37,10 +37,10 @@
 <h1>환영합니다!</h1>
 
 <!-- 입력 -->
-<input type="text" name="input_login_id" class="input" value="아이디 입력" 
+<input type="text" name="id" class="input" value="아이디 입력" 
 			onFocus="fieldFocus(this, '아이디 입력');" onblur="fieldBlur(this, '아이디 입력');"/>
 			
-<input type="password" name="input_login_pw" class="input" value="password"
+<input type="password" name="pw" class="input" value="password"
 			onFocus="fieldFocus(this, 'password');" onblur="fieldBlur(this, 'password');"/>
 <!-- //입력 -->
 <br><br>
@@ -48,7 +48,7 @@
 <!-- 안내 메시지 -->
 <div id="msg">
 <%
-	String sysMsg = (String) request.getAttribute("message");
+	String sysMsg = (String) request.getAttribute("msg");
 	if ( sysMsg != null ) {
 		out.print(sysMsg);
 	}
@@ -61,7 +61,7 @@
 <input type="button" class="btn_join" value="회원가입" onclick="location.href='join_do'"/>
 </div>
 <div>
-<input type="submit" id="btn_login" class="btn_login" value="로그인" onclick="return checkInputEmptyLogin()">
+<input type="submit" id="btn_login" class="btn_login" value="로그인" onclick="return checkInputEmpty()">
 </div>
 <!-- //버튼 -->
 

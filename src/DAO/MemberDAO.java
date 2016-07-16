@@ -27,7 +27,8 @@ public class MemberDAO {
 	public int checkMember(String inputID, String inputPW) {
 		
 		int result = 0;
-		String sql = "SELECT PW FROM TEST_MEMBER WHERE ID = ?";
+		String sql = "SELECT PW FROM TEST_MEMBER "
+					+ "WHERE ID = ?";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -64,7 +65,7 @@ public class MemberDAO {
 	public MemberDTO getMember(String inputID) {
 		
 		MemberDTO mdto = null;
-		String sql = "SELECT * FROM TEST_MEMBER" + "\n"
+		String sql = "SELECT * FROM TEST_MEMBER "
 					+ "WHERE ID = ?";
 		
 		Connection conn = null;
@@ -105,7 +106,8 @@ public class MemberDAO {
 	public int checkId(String inputID) {
 		
 		int result = 0;
-		String sql = "SELECT ID FROM TEST_MEMBER WHERE ID = ?";
+		String sql = "SELECT ID FROM TEST_MEMBER "
+					+ "WHERE ID = ?";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -125,6 +127,38 @@ public class MemberDAO {
 			}
 			
 		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBControll.closeDatabase(conn, psmt, rs);
+		}
+		
+		return result;
+	}
+	
+	public int checkNick(String inputNick) {
+		
+		int result = 0;
+		String sql = "SELECT NICK FROM TEST_MEMBER "
+					+ "WHERE NICK = ? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBControll.getConnection();
+			psmt = conn.prepareStatement(sql);
+			
+			psmt.setString(1, inputNick);
+			
+			rs = psmt.executeQuery();
+			
+			if ( rs.next() ) {
+				result = 1;
+			}
+			
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			DBControll.closeDatabase(conn, psmt, rs);
@@ -160,5 +194,43 @@ public class MemberDAO {
 		}
 		
 		return result;
+	}
+	
+	public MemberDTO updateMember(MemberDTO mdto, String userNick, String inputNick, int inputAge) {
+		
+		String sql = "UPDATE TEST_MEMBER SET "
+					+ "NICK = ?, AGE = ? "
+					+ "WHERE NICK = ?";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		try {
+			
+			conn = DBControll.getConnection();
+			psmt = conn.prepareStatement(sql);
+			
+			int i = 1;
+			psmt.setString(i++, inputNick);
+			psmt.setInt(i++, inputAge);
+			psmt.setString(i, userNick);
+			
+			int count = 0;
+			count = psmt.executeUpdate();
+			
+			if ( count == 1 ) {
+				
+				mdto.setNick(inputNick);
+				mdto.setAge(inputAge);
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBControll.closeDatabase(conn, psmt, null);
+		}
+		
+		return mdto;
 	}
 }

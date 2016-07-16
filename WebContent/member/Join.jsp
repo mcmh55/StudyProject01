@@ -14,54 +14,72 @@
 </head>
 <body>
 
-<!-- 
-<form name="frm_join">
- -->
+<div class="box">
  
 <form method="post" name="frm_join" action="join_do">
 
-<!-- 회원가입 영역 -->
-<div class="box">
-
 <h1>회원 가입</h1>
 
-<!-- 입력 -->
-<input type="text" name="input_join_id" value="아이디 입력" class="input" 
+<table align="center">
+<col width="150px"/><col width="250px"/>
+<tr>
+	<th>아이디</th>
+	<td>
+	<input type="text" name="id" value="아이디 입력"
 			onFocus="fieldFocus(this, '아이디 입력');" onblur="fieldBlur(this, '아이디 입력');"/>
-			
-<input type="password" name="input_join_pw" value="암호 입력" class="input" 
+	</td>
+</tr>
+<tr>
+	<th>암호</th>
+	<td>
+	<input type="password" name="pw" value="암호 입력"
 			onFocus="fieldFocus(this, '암호 입력');" onblur="fieldBlur(this, '암호 입력');"/>
-			
-<input type="text" name="input_join_nick" value="별명 입력" class="input"
+	</td>
+</tr>
+<tr>
+	<th>암호 확인</th>
+	<td>
+	<input type="password" name="pw_confirm" value="암호 입력"
+			onFocus="fieldFocus(this, '암호 입력');" onblur="fieldBlur(this, '암호 입력');"/>
+	</td>
+</tr>
+<tr>
+	<th>별명</th>
+	<td>
+	<input type="text" name="nick" value="별명 입력"
 			onFocus="fieldFocus(this, '별명 입력');" onblur="fieldBlur(this, '별명 입력');" />
-			
-<input type="text" name="input_join_age" value="나이 입력" class="input" 
+	</td>
+</tr>
+<tr>
+	<th>나이</th>
+	<td>
+	<input type="text" name="age" value="나이 입력"
 			onFocus="fieldFocus(this, '나이 입력');" onblur="fieldBlur(this, '나이 입력');"/>
-<!-- //입력 -->
-<br/><br/>
+	</td>
+</tr>
+</table>
+
 <!-- 안내 메시지 -->
 <div id="msg">
 <%
-	String sysMsg = (String) request.getAttribute("message");
+	String sysMsg = (String) request.getAttribute("msg");
+	
 	if ( sysMsg != null ) {
+%>
+		<br/>
+<%		
 		out.print(sysMsg);
 	}
 %>
 </div>
 <!-- //안내 메시지 -->
 
-<!-- 버튼 -->
-<div>
-<input type="button" id="btn_cancle" value="취소" onclick="location.href='login_do'"/>
-</div>
-<div>
-<input type="submit" id="btn_confirm" value="가입" onclick="return checkInputEmptyJoin()"/>
-</div>
-<!-- //버튼 -->
-</div>
-<!-- //회원가입 영역 -->
+<input type="button" id="btn_cancel" value="취소" onclick="location.href='login_do'"/>
+<input type="submit" id="btn_confirm" value="가입" onclick="return checkInputEmpty()"/>
 
 </form>
+
+</div>
 
 </body>
 </html>

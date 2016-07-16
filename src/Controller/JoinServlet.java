@@ -23,6 +23,7 @@ public class JoinServlet extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("member/Join.jsp");
 		dispatcher.forward(request, response);
 		
+		return;
 	}
 
 	// 회원가입 페이지에서 '가입'버튼으로 진입할 경우
@@ -31,7 +32,7 @@ public class JoinServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		String url = "member/Join.jsp";
-		String inputID = request.getParameter("input_join_id");
+		String inputID = request.getParameter("id");
 		
 		MemberDAO mdao = MemberDAO.getInstance();
 		int result = mdao.checkId(inputID);		// 아이디 중복 체크
@@ -39,15 +40,15 @@ public class JoinServlet extends HttpServlet {
 		switch ( result ) {
 		
 		case 1:
-			request.setAttribute("message", "이미 존재하는 회원입니다.");
+			request.setAttribute("msg", "이미 존재하는 회원입니다.");
 			break;
 			
 		case 0:
 			
-			String id = request.getParameter("input_join_id");
-			String pw = request.getParameter("input_join_pw");
-			String nick = request.getParameter("input_join_nick");
-			String age = request.getParameter("input_join_age");
+			String id = request.getParameter("id");
+			String pw = request.getParameter("pw");
+			String nick = request.getParameter("nick");
+			String age = request.getParameter("age");
 			
 			MemberDTO mdto = new MemberDTO();
 			mdto.setId(id);
@@ -70,5 +71,6 @@ public class JoinServlet extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 		
+		return;
 	}
 }

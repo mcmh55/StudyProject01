@@ -24,6 +24,7 @@ public class LoginServlet extends HttpServlet{
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 		
+		return;
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -31,8 +32,8 @@ public class LoginServlet extends HttpServlet{
 		String url = "member/Login.jsp";
 		
 		// 'login.jsp'에서 입력받은 아이디, 암호를 받아옴
-		String inputID = request.getParameter("input_login_id");
-		String inputPW = request.getParameter("input_login_pw");
+		String inputID = request.getParameter("id");
+		String inputPW = request.getParameter("pw");
 		
 		MemberDAO mdao = MemberDAO.getInstance();
 		int result = mdao.checkMember(inputID, inputPW);
@@ -40,11 +41,11 @@ public class LoginServlet extends HttpServlet{
 		switch ( result ) {
 		
 		case -1:
-			request.setAttribute("message", "비밀번호가 맞지 않습니다.");
+			request.setAttribute("msg", "비밀번호가 맞지 않습니다.");
 			break;
 		
 		case 0:
-			request.setAttribute("message", "존재하지 않는 회원입니다.");
+			request.setAttribute("msg", "존재하지 않는 회원입니다.");
 			break;
 			
 		case 1:
@@ -54,7 +55,7 @@ public class LoginServlet extends HttpServlet{
 			
 			// 다른 사이트로 이동하더라도 로그인 상태를 유지하기 위해 'session'에 회원 정보를 저장
 			session.setAttribute("loginUser", memdto);
-			request.setAttribute("message", "로그인 성공!");
+			request.setAttribute("msg", "로그인 성공!");
 			url = "bbsList_do";
 			
 			break;
@@ -63,5 +64,6 @@ public class LoginServlet extends HttpServlet{
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 		
+		return;
 	}
 }

@@ -6,9 +6,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>회원 정보</title>
+<title>회원 정보 수정</title>
 
 <link rel="stylesheet" type="text/css" href="css/MemberInfo.css">
+
+<script src="js/MemberUpdate.js" type="text/javascript"></script>
 
 </head>
 <body>
@@ -23,25 +25,11 @@ int age = memdto.getAge();
 
 %>
 
-<!-- 안내 메시지 -->
-<%
-	String sysMsg = (String) request.getAttribute("msg_update_member");
-	
-	if ( sysMsg != null ) {
-%>
-		<script type="text/javascript">
-		alert("<%= sysMsg %>");
-		</script>
-<%		
-	}
-%>
-<!-- //안내 메시지 -->
-
 <div class="box">
 
-<h1>회원 정보</h1>
+<h1>회원 정보 수정</h1>
 
-<form name="frm_MemberInfo" action="memberUpdate_do">
+<form name="frm_member_update" action="memberUpdate_do" method="post">
 
 <table align="center">
 <col width="150px"/><col width="250px"/>
@@ -51,16 +39,31 @@ int age = memdto.getAge();
 </tr>
 <tr>
 	<th>별명</th>
-	<td class="memdata"><%= nick %></td>
+	<td><input type="text" name="nick" value="<%= nick %>"/></td>
 </tr>
 <tr>
 	<th>나이</th>
-	<td class="memdata"><%= age %></td>
+	<td><input type="text" name="age" value="<%= age %>"/></td>
 </tr>
 </table>
 
-<input type="button" class="btn_back" value="돌아가기" onclick="location.href='bbsList_do'"/>
-<input type="submit" class="btn_update_member" value="회원정보 수정"/>
+<!-- 안내 메시지 -->
+<div id="msg">
+<%
+	String sysMsg = (String) request.getAttribute("msg");
+	
+	if ( sysMsg != null ) {
+%>
+		<br/>
+<%		
+		out.print(sysMsg);
+	}
+%>
+</div>
+<!-- //안내 메시지 -->
+
+<input type="button" class="btn_cancel" value="취소" onclick="location.href='memberInfo_do'"/>
+<input type="submit" class="btn_update" value="수정" onclick="return checkInputEmpty()"/>
 
 </form>
 

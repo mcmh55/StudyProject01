@@ -1,8 +1,8 @@
 // 공백 체크
-function checkInputEmptyLogin() {
+function checkInputEmpty() {
 	
-	var inputID = document.frm_login.input_login_id;
-	var inputPW = document.frm_login.input_login_pw;
+	var inputID = document.frm_login.id;
+	var inputPW = document.frm_login.pw;
 	
 	if ( inputID.value == "아이디 입력" ) {
 		
