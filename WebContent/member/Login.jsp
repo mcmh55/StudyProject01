@@ -1,9 +1,10 @@
-<%@ page import = "java.sql.DriverManager" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+
 <%@ page import = "java.sql.ResultSet" %>
-<%@ page import = "java.sql.Statement" %>
+<%@ page import = "java.sql.PreparedStatement" %>
 <%@ page import = "java.sql.Connection" %>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ page import = "DB.DBControll" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -19,15 +20,16 @@
 </head>
 <body>
 
-<%!	// 선언부는 첫 방문자에 의해서 단 한번 수행
-	Connection conn = null;
-	Statement stmt = null;
-	ResultSet rs = null;
-	
-	String url = "jdbc:oracle:thin:@localhost:1521:xe";
-	String id = "hr";
-	String pw = "hr";
-	String sql = "SELECT * FROM TEST_MEMBER";
+<%
+
+String msgLeavMember = (String) request.getAttribute("msg_member_leave");
+if ( msgLeavMember != null ) {
+%>
+	<script type="text/javascript">
+	alert("<%= msgLeavMember %>");
+	</script>
+<%	
+}
 %>
 
 <form action="login_do" method="post" name="frm_login">
@@ -48,10 +50,12 @@
 <!-- 안내 메시지 -->
 <div id="msg">
 <%
-	String sysMsg = (String) request.getAttribute("msg");
-	if ( sysMsg != null ) {
-		out.print(sysMsg);
-	}
+
+String msg_input = (String) request.getAttribute("msg");
+if ( msg_input != null ) {
+	out.print(msg_input);
+}
+
 %>
 </div>
 <!-- //안내 메시지 -->
@@ -83,40 +87,40 @@
 </tr>
 	
 <%
-	try {
+
+Connection conn = null;
+PreparedStatement psmt = null;
+ResultSet rs = null;
+
+try {
+
+	String sql = "SELECT * FROM TEST_MEMBER";
+	
+	conn = DBControll.getConnection();
+	psmt = conn.prepareStatement(sql);
+	rs = psmt.executeQuery();
+	
+	while ( rs.next() ) {
 		
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		conn = DriverManager.getConnection(url, id, pw);
-		stmt = conn.createStatement();
-		rs = stmt.executeQuery(sql);
+		out.println("<tr>");
+		out.println("<td>" + rs.getString("ID") + "</td>");
+		out.println("<td>" + rs.getString("PW") + "</td>");
+		out.println("<td>" + rs.getString("NICK") + "</td>");
+		out.println("<td>" + rs.getInt("AGE") + "</td>");
+		out.println("</tr>");
 		
-		while ( rs.next() ) {
-			
-			out.println("<tr>");
-			out.println("<td>" + rs.getString("ID") + "</td>");
-			out.println("<td>" + rs.getString("PW") + "</td>");
-			out.println("<td>" + rs.getString("NICK") + "</td>");
-			out.println("<td>" + rs.getInt("AGE") + "</td>");
-			out.println("</tr>");
-			
-		}
-	} catch (Exception e) {
-		e.printStackTrace();
-	} finally {
-		
-		try {
-			
-			if ( rs != null ) rs.close();
-			if ( stmt != null ) stmt.close();
-			if ( conn != null ) conn.close();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
+} catch (Exception e) {
+	e.printStackTrace();
+} finally {
+	DBControll.closeDatabase(conn, psmt, rs);
+}
+
 %>
 
 </table>
+
+<!-- //테스트용 테이블 -->
 
 </body>
 </html>

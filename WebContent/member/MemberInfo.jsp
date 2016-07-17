@@ -10,6 +10,8 @@
 
 <link rel="stylesheet" type="text/css" href="css/MemberInfo.css">
 
+<script src="js/MemberInfo.js" type="text/javascript"></script>
+
 </head>
 <body>
 
@@ -61,6 +63,14 @@ int age = memdto.getAge();
 
 <input type="button" class="btn_back" value="돌아가기" onclick="location.href='bbsList_do'"/>
 <input type="submit" class="btn_update_member" value="회원정보 수정"/>
+
+<table align="center" width="100%">
+<tr>
+	<td>
+	<input type="button" class="btn_leave_member" value="회원 탈퇴" onclick="reconfirmMemberLeave()"/>
+	</td>
+</tr>
+</table>
 
 </form>
 

@@ -233,4 +233,32 @@ public class MemberDAO {
 		
 		return mdto;
 	}
+	
+	public int deleteMember(String userId) {
+		
+		String sql = "DELETE FROM TEST_MEMBER "
+					+ "WHERE ID = ? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int result = 0;
+		
+		try {
+			
+			conn = DBControll.getConnection();
+			psmt = conn.prepareStatement(sql);
+			
+			psmt.setString(1, userId);
+			
+			result = psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBControll.closeDatabase(conn, psmt, null);
+		}
+		
+		return result;
+	}
+	
 }
