@@ -31,6 +31,7 @@ tr{
 }
 
 th{
+	font-size:11pt;
 	border-bottom:1px solid #E5E5E5;
 	border-right:1px solid #E5E5E5;
 	background-color:#F9F9F9;
@@ -98,7 +99,7 @@ input{
 	cursor:pointer;
 }
 
-.btn_leave_member{
+.btn_delete_member{
 	background:#c0c0c0;
 	width:125px;  
 	padding-top:5px;

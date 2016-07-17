@@ -34,13 +34,7 @@ function fieldBlur(field, str){
 	if( field.value == '' )	field.value = str;
 }
 
-// [버튼 처리]
 //Fade in dashboard box
 $(document).ready(function(){
     $('.box').hide().fadeIn(1000);
-});
-
-//Stop click event
-$('a').click(function(event){
-    event.preventDefault(); 
 });
