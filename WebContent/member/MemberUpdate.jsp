@@ -10,6 +10,7 @@
 
 <link rel="stylesheet" type="text/css" href="css/MemberInfo.css">
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
 <script src="js/MemberUpdate.js" type="text/javascript"></script>
 
 </head>
@@ -22,6 +23,7 @@ MemberDTO memdto = (MemberDTO) session.getAttribute("loginUser");
 String id = memdto.getId();
 String nick = memdto.getNick();
 int age = memdto.getAge();
+String email = memdto.getEmail();
 
 %>
 
@@ -32,10 +34,18 @@ int age = memdto.getAge();
 <form name="frm_member_update" action="memberUpdate_do" method="post">
 
 <table align="center">
-<col width="150px"/><col width="250px"/>
+<col width="160px"/><col width="240px"/>
 <tr>
 	<th>아이디</th>
 	<td class="memdata"><%= id %></td>
+</tr>
+<tr>
+	<th>새로운 비밀번호</th>
+	<td><input type="password" name="pw" value=""/></td>
+</tr>
+<tr>
+	<th>새로운 비밀번호 확인</th>
+	<td><input type="password" name="pw_confirm" value=""/></td>
 </tr>
 <tr>
 	<th>별명</th>
@@ -45,18 +55,22 @@ int age = memdto.getAge();
 	<th>나이</th>
 	<td><input type="text" name="age" value="<%= age %>"/></td>
 </tr>
+<tr>
+	<th>이메일</th>
+	<td><input type="text" name="email" value="<%= email %>"/></td>
+</tr>
 </table>
 
 <!-- 안내 메시지 -->
 <div id="msg">
 <%
-	String sysMsg = (String) request.getAttribute("msg");
+	String msg_input = (String) request.getAttribute("msg");
 	
-	if ( sysMsg != null ) {
+	if ( msg_input != null ) {
 %>
 		<br/>
 <%		
-		out.print(sysMsg);
+		out.print(msg_input);
 	}
 %>
 </div>

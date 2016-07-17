@@ -18,21 +18,22 @@ public class MemberDAO {
 	}
 	
 /*
- * [입력한 아이디가 DB에 존재하는지 확인]
- * 입력한 아이디, 암호와 DB의 아이디, 암호와 비교
- * 아이디=불일치			'-1'을 리턴
- * 아이디=일치, 암호=불일치	'0'을 리턴
- * 아이디=일치, 암호=일치		'1'을 리턴
+ * [입력한 ID, PW가 DB에 존재하는지 확인]
+ * 입력한 ID, PW와 DB의 ID, PW와 비교
+ * ID=불일치			'-1'을 리턴
+ * ID=일치, PW=불일치	'0'을 리턴
+ * ID=일치, PW=일치	'1'을 리턴
  */
 	public int checkMember(String inputID, String inputPW) {
-		
-		int result = 0;
-		String sql = "SELECT PW FROM TEST_MEMBER "
-					+ "WHERE ID = ?";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
+		
+		int result = 0;
+		
+		String sql = "SELECT PW FROM MEMBER "
+					+ "WHERE ID = ?";
 		
 		try {
 			
@@ -61,57 +62,22 @@ public class MemberDAO {
 		return result;
 	}
 	
-	// id를 기준으로 회원 정보 가져오기
-	public MemberDTO getMember(String inputID) {
-		
-		MemberDTO mdto = null;
-		String sql = "SELECT * FROM TEST_MEMBER "
-					+ "WHERE ID = ?";
-		
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-		
-		try {
-			
-			conn = DBControll.getConnection();
-			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, inputID);
-			rs = psmt.executeQuery();
-			
-			if ( rs.next() ) {
-				
-				mdto = new MemberDTO();
-				mdto.setId(rs.getString("ID"));
-				mdto.setPw(rs.getString("PW"));
-				mdto.setNick(rs.getString("NICK"));
-				mdto.setAge(rs.getInt("AGE"));
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			DBControll.closeDatabase(conn, psmt, rs);
-		}
-		
-		return mdto;
-	}
-	
 /*
- * [아이디가 DB에 존재하는지 확인]
- * 입력한 아이디와 DB의 아이디와 비교
+ * [ID가 DB에 존재하는지 확인]
+ * 입력한 ID와 DB의 ID와 비교
  * 존재	'1'을 리턴
  * 없음	'0'을 리턴
  */
-	public int checkId(String inputID) {
-		
-		int result = 0;
-		String sql = "SELECT ID FROM TEST_MEMBER "
-					+ "WHERE ID = ?";
+	public boolean checkId(String inputID) {
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
+		
+		boolean result = false;
+		
+		String sql = "SELECT ID FROM MEMBER "
+					+ "WHERE ID = ?";
 		
 		try {
 			
@@ -121,9 +87,7 @@ public class MemberDAO {
 			rs = psmt.executeQuery();
 			
 			if ( rs.next() ) {
-				result = 1;
-			} else {
-				result = 0;
+				result = true;
 			}
 			
 		} catch (Exception e) {
@@ -135,15 +99,22 @@ public class MemberDAO {
 		return result;
 	}
 	
-	public int checkNick(String inputNick) {
-		
-		int result = 0;
-		String sql = "SELECT NICK FROM TEST_MEMBER "
-					+ "WHERE NICK = ? ";
+/*
+ * [별명이 DB에 존재하는지 확인]
+ * 입력한 별명과 DB의 별명과 비교
+ * 존재	'1'을 리턴
+ * 없음	'0'을 리턴
+ */
+	public boolean checkNick(String inputNick) {
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
+		
+		boolean result = false;
+		
+		String sql = "SELECT NICK FROM MEMBER "
+					+ "WHERE NICK = ? ";
 		
 		try {
 			
@@ -155,7 +126,7 @@ public class MemberDAO {
 			rs = psmt.executeQuery();
 			
 			if ( rs.next() ) {
-				result = 1;
+				result = true;
 			}
 			
 		} catch (SQLException e) {
@@ -167,23 +138,64 @@ public class MemberDAO {
 		return result;
 	}
 	
-	public int addMember(MemberDTO mdto) {
-		
-		int result = -1;
-		String sql = "INSERT INTO TEST_MEMBER VALUES(?, ?, ?, ?)";
+	public boolean checkEmail(String inputEmail) {
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		boolean result = false;
+		
+		String sql = "SELECT EMAIL FROM MEMBER "
+					+ "WHERE EMAIL = ? ";
 		
 		try {
 			
 			conn = DBControll.getConnection();
 			psmt = conn.prepareStatement(sql);
 			
-			psmt.setString(1, mdto.getId());
-			psmt.setString(2, mdto.getPw());
-			psmt.setString(3, mdto.getNick());
-			psmt.setInt(4, mdto.getAge());
+			psmt.setString(1, inputEmail);
+			
+			rs = psmt.executeQuery();
+			
+			if ( rs.next() ) {
+				result = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBControll.closeDatabase(conn, psmt, rs);
+		}
+		
+		return result;
+	}
+	
+//////////////////////////////
+/*
+ * 	[회원 - 가입, 수정, 삭제, 조회]
+ */
+//////////////////////////////
+	public boolean addMember(MemberDTO mdto) {
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		int result = 0;
+		
+		String sql = "INSERT INTO MEMBER VALUES(?, ?, ?, ?, ?)";
+		
+		try {
+			
+			conn = DBControll.getConnection();
+			psmt = conn.prepareStatement(sql);
+			
+			int i = 1;
+			psmt.setString(i++, mdto.getId());
+			psmt.setString(i++, mdto.getPw());
+			psmt.setString(i++, mdto.getNick());
+			psmt.setInt(i++, mdto.getAge());
+			psmt.setString(i, mdto.getEmail());
 			
 			result = psmt.executeUpdate();
 			
@@ -193,35 +205,48 @@ public class MemberDAO {
 			DBControll.closeDatabase(conn, psmt, null);
 		}
 		
-		return result;
+		return result > 0 ? true : false;
 	}
 	
-	public MemberDTO updateMember(MemberDTO mdto, String userNick, String inputNick, int inputAge) {
-		
-		String sql = "UPDATE TEST_MEMBER SET "
-					+ "NICK = ?, AGE = ? "
-					+ "WHERE NICK = ?";
+	public MemberDTO updateMember(MemberDTO mdto, String inputPw, 
+									String inputNick, int inputAge, String inputEmail) {
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
+		
+		String sql = "UPDATE MEMBER SET "
+					+ "PW = ?, NICK = ?, AGE = ?, EMAIL = ? "
+					+ "WHERE ID = ?";
 		
 		try {
 			
 			conn = DBControll.getConnection();
 			psmt = conn.prepareStatement(sql);
 			
+			String pw = "";
+			
 			int i = 1;
+			if ( inputPw.equals("") ) {
+				pw = mdto.getPw();
+			} else {
+				pw = inputPw;
+			}
+			
+			psmt.setString(i++, pw);
 			psmt.setString(i++, inputNick);
 			psmt.setInt(i++, inputAge);
-			psmt.setString(i, userNick);
+			psmt.setString(i++, inputEmail);
+			psmt.setString(i, mdto.getId());
 			
 			int count = 0;
 			count = psmt.executeUpdate();
 			
 			if ( count == 1 ) {
 				
+				mdto.setPw(pw);
 				mdto.setNick(inputNick);
 				mdto.setAge(inputAge);
+				mdto.setEmail(inputEmail);
 				
 			}
 			
@@ -236,12 +261,13 @@ public class MemberDAO {
 	
 	public int deleteMember(String userId) {
 		
-		String sql = "DELETE FROM TEST_MEMBER "
-					+ "WHERE ID = ? ";
-		
 		Connection conn = null;
 		PreparedStatement psmt = null;
+		
 		int result = 0;
+		
+		String sql = "DELETE FROM MEMBER "
+					+ "WHERE ID = ? ";
 		
 		try {
 			
@@ -259,6 +285,89 @@ public class MemberDAO {
 		}
 		
 		return result;
+	}
+	
+	
+	// ID를 기준으로 회원 정보 가져오기
+	public MemberDTO getMember(String inputID) {
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		MemberDTO mdto = null;
+		
+		String sql = "SELECT * FROM MEMBER "
+					+ "WHERE ID = ?";
+		
+		try {
+			
+			conn = DBControll.getConnection();
+			psmt = conn.prepareStatement(sql);
+			
+			psmt.setString(1, inputID);
+			
+			rs = psmt.executeQuery();
+			
+			if ( rs.next() ) {
+				
+				mdto = new MemberDTO();
+				mdto.setId(rs.getString("ID"));
+				mdto.setPw(rs.getString("PW"));
+				mdto.setNick(rs.getString("NICK"));
+				mdto.setAge(rs.getInt("AGE"));
+				mdto.setEmail(rs.getString("EMAIL"));
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBControll.closeDatabase(conn, psmt, rs);
+		}
+		
+		return mdto;
+	}
+	
+	// Email을 기준으로 회원 정보 가져오기
+	public MemberDTO getFindMember(String inputEmail) {
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		MemberDTO mdto = null;
+		
+		String sql = "SELECT * FROM MEMBER "
+					+ "WHERE EMAIL = ?";
+		
+		try {
+			
+			conn = DBControll.getConnection();
+			psmt = conn.prepareStatement(sql);
+			
+			psmt.setString(1, inputEmail);
+			
+			rs = psmt.executeQuery();
+			
+			if ( rs.next() ) {
+				
+				mdto = new MemberDTO();
+				mdto.setId(rs.getString("ID"));
+				mdto.setPw(rs.getString("PW"));
+				mdto.setNick(rs.getString("NICK"));
+				mdto.setAge(rs.getInt("AGE"));
+				mdto.setEmail(rs.getString("EMAIL"));
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBControll.closeDatabase(conn, psmt, rs);
+		}
+		
+		return mdto;
 	}
 	
 }

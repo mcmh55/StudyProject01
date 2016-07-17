@@ -22,11 +22,12 @@
 
 <%
 
-String msgLeavMember = (String) request.getAttribute("msg_member_leave");
-if ( msgLeavMember != null ) {
+String msgInfo = (String) request.getAttribute("msg_alarm");
+
+if ( msgInfo != null ) {
 %>
 	<script type="text/javascript">
-	alert("<%= msgLeavMember %>");
+	alert("<%= msgInfo %>");
 	</script>
 <%	
 }
@@ -45,17 +46,18 @@ if ( msgLeavMember != null ) {
 <input type="password" name="pw" class="input" value="password"
 			onFocus="fieldFocus(this, 'password');" onblur="fieldBlur(this, 'password');"/>
 <!-- //입력 -->
-<br><br>
 
 <!-- 안내 메시지 -->
 <div id="msg">
 <%
-
-String msg_input = (String) request.getAttribute("msg");
-if ( msg_input != null ) {
-	out.print(msg_input);
-}
-
+	String msg_input = (String) request.getAttribute("msg");
+	
+	if ( msg_input != null ) {
+%>
+		<br/>
+<%		
+		out.print(msg_input);
+	}
 %>
 </div>
 <!-- //안내 메시지 -->
@@ -74,7 +76,7 @@ if ( msg_input != null ) {
   
 </form>
 
-<p>아이디 또는 비밀번호를 잊어버리셨나요?</p>
+<p><a href="memberFind_do">아이디 또는 비밀번호를 잊어버리셨나요?</a></p>
 
 <!-- 테스트용 테이블 -->
 
@@ -84,6 +86,7 @@ if ( msg_input != null ) {
 	<th>암호</th>
 	<th>별명</th>
 	<th>나이</th>
+	<th>이메일</th>
 </tr>
 	
 <%
@@ -94,7 +97,7 @@ ResultSet rs = null;
 
 try {
 
-	String sql = "SELECT * FROM TEST_MEMBER";
+	String sql = "SELECT * FROM MEMBER";
 	
 	conn = DBControll.getConnection();
 	psmt = conn.prepareStatement(sql);
@@ -107,6 +110,7 @@ try {
 		out.println("<td>" + rs.getString("PW") + "</td>");
 		out.println("<td>" + rs.getString("NICK") + "</td>");
 		out.println("<td>" + rs.getInt("AGE") + "</td>");
+		out.println("<td>" + rs.getString("EMAIL") + "</td>");
 		out.println("</tr>");
 		
 	}

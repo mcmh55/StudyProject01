@@ -10,6 +10,7 @@
 
 <link rel="stylesheet" type="text/css" href="css/MemberInfo.css">
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
 <script src="js/MemberInfo.js" type="text/javascript"></script>
 
 </head>
@@ -22,20 +23,22 @@ MemberDTO memdto = (MemberDTO) session.getAttribute("loginUser");
 String id = memdto.getId();
 String nick = memdto.getNick();
 int age = memdto.getAge();
+String email = memdto.getEmail();
 
 %>
 
 <!-- 안내 메시지 -->
 <%
-	String sysMsg = (String) request.getAttribute("msg_update_member");
+
+String msgInfo = (String) request.getAttribute("msg_alarm");
 	
-	if ( sysMsg != null ) {
+if ( msgInfo != null ) {
 %>
-		<script type="text/javascript">
-		alert("<%= sysMsg %>");
-		</script>
+	<script type="text/javascript">
+	alert("<%= msgInfo %>");
+	</script>
 <%		
-	}
+}
 %>
 <!-- //안내 메시지 -->
 
@@ -46,7 +49,7 @@ int age = memdto.getAge();
 <form name="frm_MemberInfo" action="memberUpdate_do">
 
 <table align="center">
-<col width="150px"/><col width="250px"/>
+<col width="160px"/><col width="240px"/>
 <tr>
 	<th>아이디</th>
 	<td class="memdata"><%= id %></td>
@@ -59,6 +62,10 @@ int age = memdto.getAge();
 	<th>나이</th>
 	<td class="memdata"><%= age %></td>
 </tr>
+<tr>
+	<th>이메일</th>
+	<td class="memdata"><%= email %></td>
+</tr>
 </table>
 
 <input type="button" class="btn_back" value="돌아가기" onclick="location.href='bbsList_do'"/>
@@ -67,7 +74,7 @@ int age = memdto.getAge();
 <table align="center" width="100%">
 <tr>
 	<td>
-	<input type="button" class="btn_leave_member" value="회원 탈퇴" onclick="reconfirmMemberLeave()"/>
+	<input type="button" class="btn_delete_member" value="회원 탈퇴" onclick="reconfirmMemberDelete()"/>
 	</td>
 </tr>
 </table>

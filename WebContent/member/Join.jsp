@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="css/Join.css">
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
-<script src="js/Login.js" type="text/javascript"></script>
 <script src="js/Join.js" type="text/javascript"></script>
 
 </head>
@@ -30,17 +29,17 @@
 	</td>
 </tr>
 <tr>
-	<th>암호</th>
+	<th>비밀번호</th>
 	<td>
-	<input type="password" name="pw" value="암호 입력"
-			onFocus="fieldFocus(this, '암호 입력');" onblur="fieldBlur(this, '암호 입력');"/>
+	<input type="password" name="pw" value="비밀번호 입력"
+			onFocus="fieldFocus(this, '비밀번호 입력');" onblur="fieldBlur(this, '비밀번호 입력');"/>
 	</td>
 </tr>
 <tr>
-	<th>암호 확인</th>
+	<th>비밀번호 확인</th>
 	<td>
-	<input type="password" name="pw_confirm" value="암호 입력"
-			onFocus="fieldFocus(this, '암호 입력');" onblur="fieldBlur(this, '암호 입력');"/>
+	<input type="password" name="pw_confirm" value="비밀번호 입력"
+			onFocus="fieldFocus(this, '비밀번호 입력');" onblur="fieldBlur(this, '비밀번호 입력');"/>
 	</td>
 </tr>
 <tr>
@@ -55,6 +54,13 @@
 	<td>
 	<input type="text" name="age" value="나이 입력"
 			onFocus="fieldFocus(this, '나이 입력');" onblur="fieldBlur(this, '나이 입력');"/>
+	</td>
+</tr>
+<tr>
+	<th>이메일</th>
+	<td>
+	<input type="text" name="email" value="이메일 입력"
+			onFocus="fieldFocus(this, '이메일 입력');" onblur="fieldBlur(this, '이메일 입력');"/>
 	</td>
 </tr>
 </table>
