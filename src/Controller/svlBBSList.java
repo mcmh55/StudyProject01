@@ -8,18 +8,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-@WebServlet("/logout_do")
-public class LogoutServlet extends HttpServlet {
+@WebServlet("/bbsList_do")
+public class svlBBSList extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession session = request.getSession();
-		session.invalidate();
+		String url = "bbs/BoardList.jsp";
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("member/Login.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 		
 		return;

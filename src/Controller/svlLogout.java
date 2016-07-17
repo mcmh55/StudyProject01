@@ -8,24 +8,25 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@WebServlet("/memberInfo_do")
-public class MemberInfoServlet extends HttpServlet {
-	
+@WebServlet("/logout_do")
+public class svlLogout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String url = "member/MemberInfo.jsp";
+		HttpSession session = request.getSession();
+		session.invalidate();
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("member/Login.jsp");
 		dispatcher.forward(request, response);
 		
 		return;
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
 	}
 
 }

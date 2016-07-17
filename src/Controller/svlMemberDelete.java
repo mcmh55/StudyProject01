@@ -13,8 +13,8 @@ import javax.servlet.http.HttpSession;
 import DAO.MemberDAO;
 import DTO.MemberDTO;
 
-@WebServlet("/memberLeave_do")
-public class MemberLeaveServlet extends HttpServlet {
+@WebServlet("/memberDelete_do")
+public class svlMemberDelete extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
        
@@ -28,15 +28,16 @@ public class MemberLeaveServlet extends HttpServlet {
 		int result = mdao.deleteMember(userId);
 		
 		if ( result == 1 ) {
-			request.setAttribute("msg_member_leave", "회원 탈퇴가 정상적으로 처리되었습니다.");
+			request.setAttribute("msg_alarm", "회원 탈퇴가 정상적으로 처리되었습니다.");
 		} else {
-			request.setAttribute("msg_member_leave", "잠시 후 다시 시도해주세요.");
+			request.setAttribute("msg_alarm", "잠시 후 다시 시도해주세요.");
 		}
 		
 		String url = "logout_do";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 		
+		return;
 	}
 
 }
