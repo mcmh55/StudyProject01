@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+//import javax.servlet.http.HttpSession;
 
 import DAO.MemberDAO;
 import DTO.MemberDTO;
@@ -61,11 +61,11 @@ public class svlJoin extends HttpServlet {
 			
 			boolean result = mdao.addMember(mdto);
 			
-			HttpSession session = request.getSession();
+		//	HttpSession session = request.getSession();
 			
 			if ( result ) {
 				
-				session.setAttribute("userid", mdto.getId());
+			//	session.setAttribute("userid", mdto.getId());
 				request.setAttribute("msg_alarm", "회원으로 가입되었습니다.");
 				
 			}

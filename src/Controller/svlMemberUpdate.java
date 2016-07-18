@@ -46,9 +46,6 @@ public class svlMemberUpdate extends HttpServlet {
 		
 		String url = "member/MemberInfo.jsp";
 		
-		boolean confirmNick = true;
-		boolean confirmEmail = true;
-		
 		if ( !userNick.equals(inputNick) ) {
 			
 			boolean resultNick = mdao.checkNick(inputNick);
@@ -81,18 +78,9 @@ public class svlMemberUpdate extends HttpServlet {
 			
 		}
 			
-		if ( confirmNick && confirmEmail ) {
-			
-			mdto = mdao.updateMember(mdto, inputPw, inputNick, inputAge, inputEmail);
-			session.setAttribute("loginUser", mdto);
-			request.setAttribute("msg_alarm", "회원 정보가 수정되었습니다.");
-			
-			url = "member/MemberInfo.jsp";
-			RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-			dispatcher.forward(request, response);
-			
-			return;
-		}
+		mdto = mdao.updateMember(mdto, inputPw, inputNick, inputAge, inputEmail);
+		session.setAttribute("loginUser", mdto);
+		request.setAttribute("msg_alarm", "회원 정보가 수정되었습니다.");
 			
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);

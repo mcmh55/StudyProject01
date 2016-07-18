@@ -45,9 +45,9 @@ public class DBControll {
 		
 		try {
 			
-			if ( conn != null )	conn.close();
+			if ( rs != null )	rs.close();
 			if ( psmt != null )	psmt.close();
-			if ( rs != null)	rs.close();
+			if ( conn != null )	conn.close();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
