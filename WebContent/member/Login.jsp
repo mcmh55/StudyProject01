@@ -97,7 +97,7 @@ ResultSet rs = null;
 
 try {
 
-	String sql = "SELECT * FROM MEMBER";
+	String sql = "SELECT * FROM S_MEMBER";
 	
 	conn = DBControll.getConnection();
 	psmt = conn.prepareStatement(sql);
