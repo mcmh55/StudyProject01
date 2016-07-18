@@ -32,7 +32,7 @@ public class MemberDAO {
 		
 		int result = 0;
 		
-		String sql = "SELECT PW FROM MEMBER "
+		String sql = "SELECT PW FROM S_MEMBER "
 					+ "WHERE ID = ?";
 		
 		try {
@@ -76,7 +76,7 @@ public class MemberDAO {
 		
 		boolean result = false;
 		
-		String sql = "SELECT ID FROM MEMBER "
+		String sql = "SELECT ID FROM S_MEMBER "
 					+ "WHERE ID = ?";
 		
 		try {
@@ -113,7 +113,7 @@ public class MemberDAO {
 		
 		boolean result = false;
 		
-		String sql = "SELECT NICK FROM MEMBER "
+		String sql = "SELECT NICK FROM S_MEMBER "
 					+ "WHERE NICK = ? ";
 		
 		try {
@@ -146,7 +146,7 @@ public class MemberDAO {
 		
 		boolean result = false;
 		
-		String sql = "SELECT EMAIL FROM MEMBER "
+		String sql = "SELECT EMAIL FROM S_MEMBER "
 					+ "WHERE EMAIL = ? ";
 		
 		try {
@@ -183,7 +183,7 @@ public class MemberDAO {
 		
 		int result = 0;
 		
-		String sql = "INSERT INTO MEMBER VALUES(?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO S_MEMBER VALUES(?, ?, ?, ?, ?)";
 		
 		try {
 			
@@ -214,7 +214,7 @@ public class MemberDAO {
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		
-		String sql = "UPDATE MEMBER SET "
+		String sql = "UPDATE S_MEMBER SET "
 					+ "PW = ?, NICK = ?, AGE = ?, EMAIL = ? "
 					+ "WHERE ID = ?";
 		
@@ -266,7 +266,7 @@ public class MemberDAO {
 		
 		int result = 0;
 		
-		String sql = "DELETE FROM MEMBER "
+		String sql = "DELETE FROM S_MEMBER "
 					+ "WHERE ID = ? ";
 		
 		try {
@@ -297,7 +297,7 @@ public class MemberDAO {
 		
 		MemberDTO mdto = null;
 		
-		String sql = "SELECT * FROM MEMBER "
+		String sql = "SELECT * FROM S_MEMBER "
 					+ "WHERE ID = ?";
 		
 		try {
@@ -338,7 +338,7 @@ public class MemberDAO {
 		
 		MemberDTO mdto = null;
 		
-		String sql = "SELECT * FROM MEMBER "
+		String sql = "SELECT * FROM S_MEMBER "
 					+ "WHERE EMAIL = ?";
 		
 		try {

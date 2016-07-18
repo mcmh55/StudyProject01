@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+//import javax.servlet.http.HttpSession;
 
 import DAO.MemberDAO;
 import DTO.MemberDTO;
@@ -33,36 +33,39 @@ public class svlJoin extends HttpServlet {
 		
 		String url = "member/Join.jsp";
 		String inputId = request.getParameter("id");
+		String inputNick = request.getParameter("nick");
 		String inputEmail =  request.getParameter("email");
 		
 		MemberDAO mdao = MemberDAO.getInstance();
-		boolean resultId = mdao.checkId(inputId);		// 아이디 중복 체크
+		boolean resultId = mdao.checkId(inputId);			// 아이디 중복 체크
+		boolean resultNick = mdao.checkNick(inputNick);		// 별명 중복 체크
 		boolean resultEmail = mdao.checkEmail(inputEmail);	// 이메일 중복 체크
 		
 		if ( resultId ) {
 			request.setAttribute("msg", "이미 존재하는 회원입니다.");
+		} else if ( resultNick ) {
+			request.setAttribute("msg", "이미 존재하는 별명입니다.");
 		} else if ( resultEmail ) {
 			request.setAttribute("msg", "이미 존재하는 이메일입니다.");
 		} else {
 			
 			String pw = request.getParameter("pw");
-			String nick = request.getParameter("nick");
 			String age = request.getParameter("age");
 			
 			MemberDTO mdto = new MemberDTO();
 			mdto.setId(inputId);
 			mdto.setPw(pw);
-			mdto.setNick(nick);
+			mdto.setNick(inputNick);
 			mdto.setAge(Integer.parseInt(age));
 			mdto.setEmail(inputEmail);
 			
 			boolean result = mdao.addMember(mdto);
 			
-			HttpSession session = request.getSession();
+		//	HttpSession session = request.getSession();
 			
 			if ( result ) {
 				
-				session.setAttribute("userid", mdto.getId());
+			//	session.setAttribute("userid", mdto.getId());
 				request.setAttribute("msg_alarm", "회원으로 가입되었습니다.");
 				
 			}
