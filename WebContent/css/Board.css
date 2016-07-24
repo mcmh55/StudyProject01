@@ -67,12 +67,15 @@ a:HOVER{
 
 /* //글 리스트 */
 
-/* 글 작성 양식 */
+/* 글 작성, 수정 양식 */
 td{
 	border-bottom:1px solid #E5E5E5;
 }
 
-.tbl_write td{
+.tbl_write, .tbl_update td{
+	font-size:10pt;
+	
+	padding-left:10px;
 	text-align:left;
 }
 
@@ -161,7 +164,7 @@ textarea{
 	cursor:pointer;
 }
 
-#btn_list, #btn_update, #btn_reply, #btn_delete{
+#btn_list, #btn_update_form, #btn_reply, #btn_delete{
 	width:50px;
 }
 

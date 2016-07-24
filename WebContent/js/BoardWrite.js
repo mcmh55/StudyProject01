@@ -1,35 +1,35 @@
 // 공백 체크
 function boardCheck() {
 	
-	var pw = document.frm_write.pw;
-	var title = document.frm_write.title;
-	var content = document.frm_write.content;
+	var pw = $("#pw").val();
+	var title = $("#title").val();
+	var content = $("#content").val();
 	
-	if ( pw.value.length == 0 ) {
+	if ( pw.length == 0 ) {
 		
 		alert("비밀번호를 입력해주세요.");
-		pw.focus();
+		$("#pw").focus();
 		
 		return false;
 		
-	} else if ( isNaN(pw.value) ) {
+	} else if ( isNaN(pw) ) {
 		
 		alert("비밀번호는 숫자만 가능합니다.");
-		pw.focus();
+		$("#pw").focus();
 		
 		return false;
 		
-	} else if ( title.value.length == 0 ) {
+	} else if ( title.length == 0 ) {
 		
 		alert("제목을 입력해주세요.");
-		title.focus();
+		$("#title").focus();
 		
 		return false;
 		
-	} else if ( content.value.length == 0 ) {
+	} else if ( content.length == 0 ) {
 		
 		alert("내용을 입력해주세요.");
-		content.focus();
+		$("#content").focus();
 		
 		return false;
 		

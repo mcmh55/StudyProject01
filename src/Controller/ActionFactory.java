@@ -28,6 +28,8 @@ public class ActionFactory {
 		else if ( command.equals("board_write_form") ) 	action = new BoardWriteFormAction();
 		else if ( command.equals("board_write") )		action = new BoardWriteAction();
 		else if ( command.equals("board_view") )		action = new BoardViewAction();
+		else if ( command.equals("board_update_form") )	action = new BoardUpdateFormAction();
+		else if ( command.equals("board_update") )		action = new BoardUpdateAction();
 		
 		return action;
 	}

@@ -16,43 +16,60 @@
 </head>
 <body>
 
+<c:set var="loginUser" value="${ sessionScope.loginUser }"/>
 <c:set var="board" value="${ requestScope.boardView }"/>
-
 <div class="box">
 
-	<table class="tbl_view">
-	<col width="100px"/><col width="500px"/>
-	<tr>
-		<th>작성자</th>
-		<td>${ board.id }</td>
-	</tr>
-	<tr>
-		<th>첨부 파일</th>
-		<td>
-		<c:if test="${ board.filename != '' }">
-			<a href="">${ board.filename }</a>
-		</c:if>
-		</td>
-	</tr>
-	<tr>
-		<th>제목</th>
-		<td>${ board.title }</td>
-	</tr>
-	<tr>
-		<td colspan="2">
-		${ board.content }
-		</td>
-	</tr>
-	</table>
-
-	<div class="foot">
-		<div class="area_bottom_btn">
-			<input type="button" id="btn_reply" class="btn_blue" value="답글" onclick=""/>
-			<input type="button" id="btn_update" class="btn_blue" value="수정" onclick=""/>
-			<input type="button" id="btn_delete" class="btn_blue" value="삭제" onclick=""/>
-			<input type="button" id="btn_list" class="btn_green" value="목록" onclick="location.href='boardControll?command=board_list'"/>
+	<form name="frm_board_view" action="boardControll" method="post">
+	
+		<input type="hidden" name="command" value="board_update_form"/>
+		<input type="hidden" name="seq" value="${ board.seq }"/>
+		<input type="hidden" name="id" value="${ board.id }"/>
+		<input type="hidden" name="pw" value="${ board.pw }"/>
+		<input type="hidden" name="title" value="${ board.title }"/>
+		<input type="hidden" name="content" value="${ board.content }"/>
+		<input type="hidden" name="filename" value="${ board.filename }"/>
+		
+		<table class="tbl_view">
+		<col width="100px"/><col width="500px"/>
+		<tr>
+			<th>작성자</th>
+			<td>${ board.id }</td>
+		</tr>
+		<tr>
+			<th>첨부 파일</th>
+			<td>
+			<c:if test="${ board.filename != '' }">
+				<a href="">${ board.filename }</a>
+			</c:if>
+			</td>
+		</tr>
+		<tr>
+			<th>제목</th>
+			<td>${ board.title }</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			${ board.content }
+			</td>
+		</tr>
+		</table>
+	
+		<div class="foot">
+			<div class="area_bottom_btn">
+				<input type="button" id="btn_reply" class="btn_blue" value="답글" onclick=""/>
+				
+				<input type="submit" id="btn_update_form" class="btn_blue" value="수정" 
+				onclick="return checkAuthor('${ loginUser.id }', '${ board.id }')"/>
+				
+				<input type="button" id="btn_delete" class="btn_blue" value="삭제" onclick=""/>
+				
+				<input type="button" id="btn_list" class="btn_green" value="목록" 
+				onclick="location.href='boardControll?command=board_list'"/>
+			</div>
 		</div>
-	</div>
+	
+	</form>
 	
 </div>
 

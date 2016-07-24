@@ -54,7 +54,7 @@ public class BoardDAO implements IBoardDAO {
 				bdto = new BoardDTO(
 						rs.getInt(i++),
 						rs.getString(i++),
-						rs.getString(i++),
+						rs.getInt(i++),
 						rs.getString(i++),
 						rs.getString(i++),
 						rs.getString(i++),
@@ -99,7 +99,7 @@ public class BoardDAO implements IBoardDAO {
 			
 			int i = 1;
 			psmt.setString(i++, bdto.getId());
-			psmt.setString(i++, bdto.getPw());
+			psmt.setInt(i++, bdto.getPw());
 			psmt.setString(i++, bdto.getTitle());
 			psmt.setString(i++, bdto.getContent());
 			psmt.setString(i++, bdto.getFilename());
@@ -144,7 +144,7 @@ public class BoardDAO implements IBoardDAO {
 				bdto = new BoardDTO(
 						rs.getInt(i++),
 						rs.getString(i++),
-						rs.getString(i++),
+						rs.getInt(i++),
 						rs.getString(i++),
 						rs.getString(i++),
 						rs.getString(i++),
@@ -162,6 +162,42 @@ public class BoardDAO implements IBoardDAO {
 		}
 		
 		return bdto;
+	}
+
+	// 글 수정
+	@Override
+	public boolean updateBoard(BoardDTO bdto) {
+		
+		String sql = "UPDATE MY_BOARD SET "
+					+ "B_PW = ?, B_TITLE = ?, B_CONTENT = ?, B_FILENAME = ? "
+					+ "WHERE B_SEQ = ?";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		int count = 0;
+		
+		try {
+			
+			conn = DBControll.getConnection();
+			psmt = conn.prepareStatement(sql);
+			
+			int i = 1;
+			psmt.setInt(i++, bdto.getPw());
+			psmt.setString(i++, bdto.getTitle());
+			psmt.setString(i++, bdto.getContent());
+			psmt.setString(i++, bdto.getFilename());
+			psmt.setInt(i, bdto.getSeq());
+			
+			count = psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBControll.closeDatabase(conn, psmt, null);
+		}
+		
+		return count > 0 ? true : false;
 	}
 
 }

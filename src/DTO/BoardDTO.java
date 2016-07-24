@@ -6,7 +6,7 @@ public class BoardDTO {
 
 	private int seq;
 	private String id;
-	private String pw;
+	private int pw;
 	private String title;
 	private String content;
 	private String filename;
@@ -17,7 +17,7 @@ public class BoardDTO {
 	
 	public BoardDTO() {}
 	
-	public BoardDTO(int seq, String id, String pw, String title, String content, String filename, int readcount,
+	public BoardDTO(int seq, String id, int pw, String title, String content, String filename, int readcount,
 			Timestamp writedate, int notice, int del) {
 		
 		super();
@@ -34,9 +34,30 @@ public class BoardDTO {
 		
 	}
 	
-	public BoardDTO(String id, String pw, String title, String content, String filename) {
+	public BoardDTO(String id, int pw, String title, String content, String filename) {
 		
 		this.id = id;
+		this.pw = pw;
+		this.title = title;
+		this.content = content;
+		this.filename = filename;
+		
+	}
+	
+	public BoardDTO(int seq, String id, int pw, String title, String content, String filename) {
+		
+		this.seq = seq;
+		this.id = id;
+		this.pw = pw;
+		this.title = title;
+		this.content = content;
+		this.filename = filename;
+		
+	}
+	
+	public BoardDTO(int seq, int pw, String title, String content, String filename) {
+		
+		this.seq = seq;
 		this.pw = pw;
 		this.title = title;
 		this.content = content;
@@ -59,11 +80,11 @@ public class BoardDTO {
 		this.seq = seq;
 	}
 
-	public String getPw() {
+	public int getPw() {
 		return pw;
 	}
 
-	public void setPw(String pw) {
+	public void setPw(int pw) {
 		this.pw = pw;
 	}
 

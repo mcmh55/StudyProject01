@@ -64,7 +64,7 @@ public class svlJoin extends HttpServlet {
 			if ( result ) {
 				
 				request.setAttribute("msg_alarm", "회원으로 가입되었습니다.");
-				url = "member/index.jsp";
+				url = "index.jsp";
 				
 			}
 		}

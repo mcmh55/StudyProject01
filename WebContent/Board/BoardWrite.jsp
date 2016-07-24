@@ -34,15 +34,15 @@
 	</tr>
 	<tr>
 		<th>비밀번호</th>
-		<td><input type="password" name="pw" size="4" maxlength="4"/> <font color="red" size="2">*필수 입력</font></td>
+		<td><input type="password" id="pw" name="pw" size="4" maxlength="4"/> <font color="red" size="2">*필수 입력</font></td>
 	</tr>
 	<tr>
 		<th>파일 첨부</th>
-		<td><input type="file" name="filename"/></td>
+		<td><input type="file" id="filename" name="filename"/></td>
 	</tr>
 	<tr>
 		<th>제목</th>
-		<td><input type="text" name="title" size="80" maxlength="50"/></td>
+		<td><input type="text" id="title" name="title" size="80" maxlength="50"/></td>
 	</tr>
 	<tr>
 		<td colspan="2" class="txtarea">
@@ -54,7 +54,7 @@
 	<div class="foot">
 		<div class="area_bottom_btn">
 			<input type="button" class="btn_cancel" value="취소" onclick="location.href='boardControll?command=board_list'"/>
-			<input type="submit" class="btn_write" value="확인" onclick="return boardCheck()"/>
+			<input type="submit" id="btn_write" class="btn_write" value="확인" onclick="return boardCheck()"/>
 		</div>
 	</div>
 	
