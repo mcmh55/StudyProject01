@@ -97,7 +97,7 @@ ResultSet rs = null;
 
 try {
 
-	String sql = "SELECT * FROM S_MEMBER";
+	String sql = "SELECT * FROM MY_MEMBER";
 	
 	conn = DBControll.getConnection();
 	psmt = conn.prepareStatement(sql);
@@ -106,11 +106,11 @@ try {
 	while ( rs.next() ) {
 		
 		out.println("<tr>");
-		out.println("<td>" + rs.getString("ID") + "</td>");
-		out.println("<td>" + rs.getString("PW") + "</td>");
-		out.println("<td>" + rs.getString("NICK") + "</td>");
-		out.println("<td>" + rs.getInt("AGE") + "</td>");
-		out.println("<td>" + rs.getString("EMAIL") + "</td>");
+		out.println("<td>" + rs.getString("M_ID") + "</td>");
+		out.println("<td>" + rs.getString("M_PW") + "</td>");
+		out.println("<td>" + rs.getString("M_NICK") + "</td>");
+		out.println("<td>" + rs.getInt("M_AGE") + "</td>");
+		out.println("<td>" + rs.getString("M_EMAIL") + "</td>");
 		out.println("</tr>");
 		
 	}

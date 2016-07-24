@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/bbsList_do")
-public class svlBBSList extends HttpServlet {
+public class BBSListSVL extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
        
