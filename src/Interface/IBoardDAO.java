@@ -8,4 +8,5 @@ public interface IBoardDAO {
 
 	List<BoardDTO> selectAllBoardList();
 	boolean insertBoard(BoardDTO bdto);
+	BoardDTO selectOneBoard(int seq);
 }

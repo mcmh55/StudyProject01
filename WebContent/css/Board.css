@@ -43,7 +43,7 @@ th{
 	background-color:#F9F9F9;
 }
 
-/* 리스트 전용 */
+/* 글 리스트 */
 .seq, .writedate, .readcount{
 	font-size:10pt;
 }
@@ -65,9 +65,9 @@ a:HOVER{
 	margin:20px 0px 20px 0px;
 }
 
-/* //리스트 전용 */
+/* //글 리스트 */
 
-/* 글 작성 폼 */
+/* 글 작성 양식 */
 td{
 	border-bottom:1px solid #E5E5E5;
 }
@@ -83,7 +83,16 @@ textarea{
 .txtarea{
 	padding-right:10px;
 }
-/* //글 작성 폼 */
+/* //글 작성 양식 */
+
+/* 글 보기  */
+.tbl_view td{
+	font-size:10pt;
+	
+	padding-left:10px;
+	text-align:left;
+}
+/* //글 보기  */
 
 /* 버튼 */
 .foot{
@@ -118,6 +127,42 @@ textarea{
 	font-size:0.8em;
 	
 	cursor:pointer;
+}
+
+.btn_green{
+	background:#1fad3f;
+	width:125px;
+	padding-top:5px;
+	padding-bottom:5px;
+	color:white;
+	border-radius:4px;
+	border:1px solid #188731;
+	
+	margin:20px 10px 20px 10px;
+	font-weight:800;
+	font-size:0.8em;
+	
+	cursor:pointer;
+}
+
+.btn_blue{
+	background:#0080ff;
+	width:125px;
+	padding-top:5px;
+	padding-bottom:5px;
+	color:white;
+	border-radius:4px;
+	border:1px solid #0055aa;
+	
+	margin:20px 10px 20px 10px;
+	font-weight:800;
+	font-size:0.8em;
+	
+	cursor:pointer;
+}
+
+#btn_list, #btn_update, #btn_reply, #btn_delete{
+	width:50px;
 }
 
 .btn:hover{

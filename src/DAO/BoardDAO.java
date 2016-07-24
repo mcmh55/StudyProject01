@@ -37,6 +37,7 @@ public class BoardDAO implements IBoardDAO {
 		ResultSet rs = null;
 		
 		List<BoardDTO> boardList = new ArrayList<BoardDTO>();
+		BoardDTO bdto = null;
 		
 		try {
 			
@@ -50,18 +51,18 @@ public class BoardDAO implements IBoardDAO {
 			while ( rs.next() ) {
 				
 				int i = 1;
-				BoardDTO bdto = new BoardDTO(
-								rs.getInt(i++),
-								rs.getString(i++),
-								rs.getString(i++),
-								rs.getString(i++),
-								rs.getString(i++),
-								rs.getString(i++),
-								rs.getInt(i++),
-								rs.getTimestamp(i++),
-								rs.getInt(i++),
-								rs.getInt(i)
-								);
+				bdto = new BoardDTO(
+						rs.getInt(i++),
+						rs.getString(i++),
+						rs.getString(i++),
+						rs.getString(i++),
+						rs.getString(i++),
+						rs.getString(i++),
+						rs.getInt(i++),
+						rs.getTimestamp(i++),
+						rs.getInt(i++),
+						rs.getInt(i)
+						);
 				
 				boardList.add(bdto);
 				
@@ -112,6 +113,55 @@ public class BoardDAO implements IBoardDAO {
 		}
 		
 		return count > 0 ? true : false;
+	}
+
+	// 선택한 글 보기
+	@Override
+	public BoardDTO selectOneBoard(int seq) {
+		
+		String sql = "SELECT B_SEQ, B_ID, B_PW, B_TITLE, REPLACE(B_CONTENT, CHR(10), '<br/>'), "
+				+ "B_FILENAME, B_READCOUNT, B_WRITEDATE, B_NOTICE, B_DEL FROM MY_BOARD "
+				+ "WHERE B_SEQ = ? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		BoardDTO bdto = null;
+		
+		try {
+			
+			conn = DBControll.getConnection();
+			psmt = conn.prepareStatement(sql);
+			
+			psmt.setInt(1, seq);
+			
+			rs = psmt.executeQuery();
+			
+			if ( rs.next() ) {
+				
+				int i = 1;
+				bdto = new BoardDTO(
+						rs.getInt(i++),
+						rs.getString(i++),
+						rs.getString(i++),
+						rs.getString(i++),
+						rs.getString(i++),
+						rs.getString(i++),
+						rs.getInt(i++),
+						rs.getTimestamp(i++),
+						rs.getInt(i++),
+						rs.getInt(i)
+						);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBControll.closeDatabase(conn, psmt, rs);
+		}
+		
+		return bdto;
 	}
 
 }
