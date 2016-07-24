@@ -56,7 +56,7 @@ public class svlLogin extends HttpServlet{
 			// 다른 사이트로 이동하더라도 로그인 상태를 유지하기 위해 'session'에 회원 정보를 저장
 			session.setAttribute("loginUser", memdto);
 			request.setAttribute("msg", "로그인 성공!");
-			url = "bbsList_do";
+			url = "boardControll?command=board_list";
 			
 			break;
 		}
