@@ -15,7 +15,7 @@
 
 <div class="box">
  
-<form method="post" name="frm_join" action="join_do">
+<form name="frm_join" method="post" action="join_do">
 
 <h1>회원 가입</h1>
 

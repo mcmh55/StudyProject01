@@ -57,6 +57,13 @@ function checkInputEmpty() {
 		
 		return false;
 		
+	} else if ( inputAge.value > 120 ) {
+		
+		alert("나이를 정확히 입력해주세요.");
+		unputAge.focus();
+		
+		return false;
+		
 	} else if ( inputEmail.value == "" || inputEmail.value == "이메일 입력" ) {
 		
 		alert("이메일을 입력해주세요.");

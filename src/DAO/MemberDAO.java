@@ -32,8 +32,8 @@ public class MemberDAO {
 		
 		int result = 0;
 		
-		String sql = "SELECT PW FROM S_MEMBER "
-					+ "WHERE ID = ?";
+		String sql = "SELECT M_PW FROM MY_MEMBER "
+					+ "WHERE M_ID = ?";
 		
 		try {
 			
@@ -44,7 +44,7 @@ public class MemberDAO {
 			
 			if ( rs.next() ) {
 				
-				if ( rs.getString("PW") != null && rs.getString("PW").equals(inputPW) ) {
+				if ( rs.getString("M_PW") != null && rs.getString("M_PW").equals(inputPW) ) {
 					result = 1;
 				} else {
 					result = -1;
@@ -76,14 +76,16 @@ public class MemberDAO {
 		
 		boolean result = false;
 		
-		String sql = "SELECT ID FROM S_MEMBER "
-					+ "WHERE ID = ?";
+		String sql = "SELECT M_ID FROM MY_MEMBER "
+					+ "WHERE M_ID = ?";
 		
 		try {
 			
 			conn = DBControll.getConnection();
 			psmt = conn.prepareStatement(sql);
+			
 			psmt.setString(1, inputID);
+			
 			rs = psmt.executeQuery();
 			
 			if ( rs.next() ) {
@@ -113,8 +115,8 @@ public class MemberDAO {
 		
 		boolean result = false;
 		
-		String sql = "SELECT NICK FROM S_MEMBER "
-					+ "WHERE NICK = ? ";
+		String sql = "SELECT M_NICK FROM MY_MEMBER "
+					+ "WHERE M_NICK = ? ";
 		
 		try {
 			
@@ -146,8 +148,8 @@ public class MemberDAO {
 		
 		boolean result = false;
 		
-		String sql = "SELECT EMAIL FROM S_MEMBER "
-					+ "WHERE EMAIL = ? ";
+		String sql = "SELECT M_EMAIL FROM MY_MEMBER "
+					+ "WHERE M_EMAIL = ? ";
 		
 		try {
 			
@@ -183,7 +185,7 @@ public class MemberDAO {
 		
 		int result = 0;
 		
-		String sql = "INSERT INTO S_MEMBER VALUES(?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO MY_MEMBER VALUES(?, ?, ?, ?, ?)";
 		
 		try {
 			
@@ -214,9 +216,9 @@ public class MemberDAO {
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		
-		String sql = "UPDATE S_MEMBER SET "
-					+ "PW = ?, NICK = ?, AGE = ?, EMAIL = ? "
-					+ "WHERE ID = ?";
+		String sql = "UPDATE MY_MEMBER SET "
+					+ "M_PW = ?, M_NICK = ?, M_AGE = ?, M_EMAIL = ? "
+					+ "WHERE M_ID = ?";
 		
 		try {
 			
@@ -266,8 +268,8 @@ public class MemberDAO {
 		
 		int result = 0;
 		
-		String sql = "DELETE FROM S_MEMBER "
-					+ "WHERE ID = ? ";
+		String sql = "DELETE FROM MY_MEMBER "
+					+ "WHERE M_ID = ? ";
 		
 		try {
 			
@@ -297,8 +299,8 @@ public class MemberDAO {
 		
 		MemberDTO mdto = null;
 		
-		String sql = "SELECT * FROM S_MEMBER "
-					+ "WHERE ID = ?";
+		String sql = "SELECT * FROM MY_MEMBER "
+					+ "WHERE M_ID = ?";
 		
 		try {
 			
@@ -312,11 +314,11 @@ public class MemberDAO {
 			if ( rs.next() ) {
 				
 				mdto = new MemberDTO();
-				mdto.setId(rs.getString("ID"));
-				mdto.setPw(rs.getString("PW"));
-				mdto.setNick(rs.getString("NICK"));
-				mdto.setAge(rs.getInt("AGE"));
-				mdto.setEmail(rs.getString("EMAIL"));
+				mdto.setId(rs.getString("M_ID"));
+				mdto.setPw(rs.getString("M_PW"));
+				mdto.setNick(rs.getString("M_NICK"));
+				mdto.setAge(rs.getInt("M_AGE"));
+				mdto.setEmail(rs.getString("M_EMAIL"));
 				
 			}
 			
@@ -338,8 +340,8 @@ public class MemberDAO {
 		
 		MemberDTO mdto = null;
 		
-		String sql = "SELECT * FROM S_MEMBER "
-					+ "WHERE EMAIL = ?";
+		String sql = "SELECT * FROM MY_MEMBER "
+					+ "WHERE M_EMAIL = ?";
 		
 		try {
 			
@@ -353,11 +355,11 @@ public class MemberDAO {
 			if ( rs.next() ) {
 				
 				mdto = new MemberDTO();
-				mdto.setId(rs.getString("ID"));
-				mdto.setPw(rs.getString("PW"));
-				mdto.setNick(rs.getString("NICK"));
-				mdto.setAge(rs.getInt("AGE"));
-				mdto.setEmail(rs.getString("EMAIL"));
+				mdto.setId(rs.getString("M_ID"));
+				mdto.setPw(rs.getString("M_PW"));
+				mdto.setNick(rs.getString("M_NICK"));
+				mdto.setAge(rs.getInt("M_AGE"));
+				mdto.setEmail(rs.getString("M_EMAIL"));
 				
 			}
 			
