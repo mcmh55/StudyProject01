@@ -10,4 +10,5 @@ public interface IBoardDAO {
 	boolean insertBoard(BoardDTO bdto);
 	BoardDTO selectOneBoard(int seq);
 	boolean updateBoard(BoardDTO bdto);
+	boolean deleteBoard(int seq);
 }

@@ -200,4 +200,34 @@ public class BoardDAO implements IBoardDAO {
 		return count > 0 ? true : false;
 	}
 
+	// 글 삭제
+	@Override
+	public boolean deleteBoard(int seq) {
+		
+		String sql = "UPDATE MY_BOARD SET "
+					+ "B_DEL = 1 "
+					+ "WHERE B_SEQ = ? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		int count = 0;
+		
+		try {
+			
+			conn = DBControll.getConnection();
+			psmt = conn.prepareStatement(sql);
+			
+			psmt.setInt(1, seq);
+			
+			count = psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBControll.closeDatabase(conn, psmt, null);
+		}
+		
+		return count > 0 ? true : false;
+	}
 }

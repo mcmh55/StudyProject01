@@ -62,7 +62,8 @@
 				<input type="submit" id="btn_update_form" class="btn_blue" value="수정" 
 				onclick="return checkAuthor('${ loginUser.id }', '${ board.id }')"/>
 				
-				<input type="button" id="btn_delete" class="btn_blue" value="삭제" onclick=""/>
+				<input type="button" id="btn_delete" class="btn_blue" value="삭제" 
+				onclick="location.href='boardControll?command=board_delete&seq=${ board.seq }'"/>
 				
 				<input type="button" id="btn_list" class="btn_green" value="목록" 
 				onclick="location.href='boardControll?command=board_list'"/>
