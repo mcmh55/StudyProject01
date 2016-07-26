@@ -68,7 +68,7 @@ if ( msgInfo != null ) {
 </tr>
 </table>
 
-<input type="button" class="btn_back" value="돌아가기" onclick="location.href='bbsList_do'"/>
+<input type="button" class="btn_back" value="돌아가기" onclick="location.href='boardControll?command=board_list'"/>
 <input type="submit" class="btn_update_member" value="회원정보 수정"/>
 
 <table align="center" width="100%">

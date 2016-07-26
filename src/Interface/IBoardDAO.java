@@ -7,8 +7,9 @@ import DTO.BoardDTO;
 public interface IBoardDAO {
 
 	List<BoardDTO> selectAllBoardList();
-	boolean insertBoard(BoardDTO bdto);
 	BoardDTO selectOneBoard(int seq);
+	List<BoardDTO> selectSearchBoardList(int searchType, String searchText);
+	boolean insertBoard(BoardDTO bdto);
 	boolean updateBoard(BoardDTO bdto);
 	boolean deleteBoard(int seq);
 }
