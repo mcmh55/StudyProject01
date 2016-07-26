@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="css/Board.css">
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
-<script src="js/Login.js"></script>
+<script src="js/Board_List.js"></script>
 
 </head>
 <body>
@@ -67,13 +67,31 @@
 		1 2 3 4 5
 	</div>
 	
+	<div class="area_search">
+		<form action="boardControll">
+		
+			<input type="hidden" name="command" value="board_search"/>
+			<input type="hidden" id="search_type" name="search_type"/>
+			<input type="hidden" id="search_text" name="search_text"/>
+		
+			<select id="search_type_list" name="search_type_list">
+				<option label="제목+내용" value="1"/>
+				<option label="제목" value="2"/>
+				<option label="글 작성자" value="3"/>
+			</select>
+			<input type="text" id="input_search_text"/>
+			<input type="submit" id="btn_search" class="btn_blue" value="검색"
+			onclick="return checkEmpty()"/>
+		</form>
+	</div>
+	
 	<div align="right">
 		<input type="button" class="btn_board_write" value="글쓰기" 
 		onclick="location.href='boardControll?command=board_write_form'"/>
 	</div>
 	
 	<input type="button" class="btn_logout" value="로그아웃" onclick="location.href='logout_do'"/>
-	<input type="button" class="btn_member_info" value="내 정보"/>
+	<input type="button" class="btn_member_info" value="내 정보" onclick="location.href='memberInfo_do'"/>
 
 </div>
 <!-- //백그라운드 영역 -->
