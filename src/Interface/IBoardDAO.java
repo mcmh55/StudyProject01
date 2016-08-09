@@ -10,6 +10,7 @@ public interface IBoardDAO {
 	BoardDTO selectOneBoard(int seq);
 	List<BoardDTO> selectSearchBoardList(int searchType, String searchText);
 	boolean insertBoard(BoardDTO bdto);
+	boolean insertReplyBoard(int seq, BoardDTO bdto);
 	boolean updateBoard(BoardDTO bdto);
 	boolean deleteBoard(int seq);
 }

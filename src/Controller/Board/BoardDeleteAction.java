@@ -19,8 +19,7 @@ public class BoardDeleteAction implements Action {
 		
 		int seq = Integer.parseInt(request.getParameter("seq"));
 		
-		BoardDAO bdao = BoardDAO.getGetInstance();
-		boolean runDB = bdao.deleteBoard(seq);
+		boolean runDB = BoardDAO.INSTANCE.deleteBoard(seq);
 		
 		if ( !runDB ) {
 			url = "boardControll?command=board_view&seq=" + seq;
