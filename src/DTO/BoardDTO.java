@@ -1,77 +1,87 @@
 package DTO;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class BoardDTO {
 
 	private int seq;
+	private int group;
+	private int depth;
+	private int step;
+	private int parentSeq;
+	private int parentDel;
 	private String id;
 	private int pw;
 	private String title;
 	private String content;
-	private String filename;
-	private int readcount;
-	private Timestamp writedate;
+	private String fileName;
+	private int readCount;
+	private Date writeDate;
 	private int notice;
 	private int del;
+	private int commentSeq;
 	
 	public BoardDTO() {}
 	
-	public BoardDTO(int seq, String id, int pw, String title, String content, String filename, int readcount,
-			Timestamp writedate, int notice, int del) {
-		
+	public BoardDTO(int seq, int group, int depth, int step, int parentSeq, int parentDel, String id, int pw,
+			String title, String content, String fileName, int readCount, Date writeDate, int notice, int del,
+			int commentSeq) {
 		super();
 		this.seq = seq;
+		this.group = group;
+		this.depth = depth;
+		this.step = step;
+		this.parentSeq = parentSeq;
+		this.parentDel = parentDel;
 		this.id = id;
 		this.pw = pw;
 		this.title = title;
 		this.content = content;
-		this.filename = filename;
-		this.readcount = readcount;
-		this.writedate = writedate;
+		this.fileName = fileName;
+		this.readCount = readCount;
+		this.writeDate = writeDate;
 		this.notice = notice;
 		this.del = del;
-		
+		this.commentSeq = commentSeq;
 	}
-	
-	public BoardDTO(String id, int pw, String title, String content, String filename) {
-		
+
+
+
+	public BoardDTO(String id, int pw, String title, String content, String fileName) {
 		this.id = id;
 		this.pw = pw;
 		this.title = title;
 		this.content = content;
-		this.filename = filename;
-		
+		this.fileName = fileName;
 	}
 	
-	public BoardDTO(int seq, String id, int pw, String title, String content, String filename) {
-		
+	public BoardDTO(int seq, String id, int pw, String title, String content, String fileName) {
 		this.seq = seq;
 		this.id = id;
 		this.pw = pw;
 		this.title = title;
 		this.content = content;
-		this.filename = filename;
-		
+		this.fileName = fileName;
 	}
 	
-	public BoardDTO(int seq, int pw, String title, String content, String filename) {
-		
+	public BoardDTO(int seq, int pw, String title, String content, String fileName) {
 		this.seq = seq;
 		this.pw = pw;
 		this.title = title;
 		this.content = content;
-		this.filename = filename;
-		
+		this.fileName = fileName;
 	}
+
 
 	@Override
 	public String toString() {
-		return "BoardDTO [seq=" + seq + ", pw=" + pw + ", id=" + id + ", title=" + title + ", content=" + content
-				+ ", filename=" + filename + ", readcount=" + readcount + ", writedate=" + writedate + ", notice="
-				+ notice + ", del=" + del + "]";
+		return "BoardDTO [seq=" + seq + ", group=" + group + ", depth=" + depth + ", step=" + step + ", parentSeq="
+				+ parentSeq + ", parentDel=" + parentDel + ", id=" + id + ", pw=" + pw + ", title=" + title
+				+ ", content=" + content + ", fileName=" + fileName + ", readCount=" + readCount + ", writeDate="
+				+ writeDate + ", notice=" + notice + ", del=" + del + ", commentSeq=" + commentSeq + "]";
 	}
 
+	
 	public int getSeq() {
 		return seq;
 	}
@@ -80,12 +90,44 @@ public class BoardDTO {
 		this.seq = seq;
 	}
 
-	public int getPw() {
-		return pw;
+	public int getGroup() {
+		return group;
 	}
 
-	public void setPw(int pw) {
-		this.pw = pw;
+	public void setGroup(int group) {
+		this.group = group;
+	}
+
+	public int getDepth() {
+		return depth;
+	}
+
+	public void setDepth(int depth) {
+		this.depth = depth;
+	}
+
+	public int getStep() {
+		return step;
+	}
+
+	public void setStep(int step) {
+		this.step = step;
+	}
+
+	public int getParentSeq() {
+		return parentSeq;
+	}
+
+	public void setParentSeq(int parentSeq) {
+		this.parentSeq = parentSeq;
+	}
+
+	public int getParentDel() {
+		return parentDel;
+	}
+
+	public void setParentDel(int parentDel) {
+		this.parentDel = parentDel;
 	}
 
 	public String getId() {
@@ -94,6 +136,14 @@ public class BoardDTO {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public int getPw() {
+		return pw;
+	}
+
+	public void setPw(int pw) {
+		this.pw = pw;
 	}
 
 	public String getTitle() {
@@ -112,28 +162,28 @@ public class BoardDTO {
 		this.content = content;
 	}
 
-	public String getFilename() {
-		return filename;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setFilename(String filename) {
-		this.filename = filename;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
-	public int getReadcount() {
-		return readcount;
+	public int getReadCount() {
+		return readCount;
 	}
 
-	public void setReadcount(int readcount) {
-		this.readcount = readcount;
+	public void setReadCount(int readCount) {
+		this.readCount = readCount;
 	}
 
-	public Timestamp getWritedate() {
-		return writedate;
+	public Date getWriteDate() {
+		return writeDate;
 	}
 
-	public void setWritedate(Timestamp writedate) {
-		this.writedate = writedate;
+	public void setWriteDate(Date writeDate) {
+		this.writeDate = writeDate;
 	}
 
 	public int getNotice() {
@@ -152,4 +202,11 @@ public class BoardDTO {
 		this.del = del;
 	}
 
+	public int getCommentSeq() {
+		return commentSeq;
+	}
+
+	public void setCommentSeq(int commentSeq) {
+		this.commentSeq = commentSeq;
+	}
 }

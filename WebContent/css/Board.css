@@ -44,7 +44,7 @@ th{
 }
 
 /* 글 리스트 */
-.seq, .writedate, .readcount{
+.seq, .write_date, .read_count{
 	font-size:10pt;
 }
 .title{
@@ -75,7 +75,7 @@ td{
 	border-bottom:1px solid #E5E5E5;
 }
 
-.tbl_write, .tbl_update td{
+.tbl_write, .tbl_update, .tbl_reply td{
 	font-size:10pt;
 	
 	padding-left:10px;
@@ -116,7 +116,7 @@ textarea{
 	vertical-align:middle;
 }
 
-.btn_logout, .btn_cancel{
+.btn_logout, .btn_red{
 	background:#ff8080;
 	width:125px;
 	padding-top:5px;
@@ -167,7 +167,7 @@ textarea{
 	cursor:pointer;
 }
 
-#btn_list, #btn_update_form, #btn_reply, #btn_delete, #btn_search{
+#btn_cancel, #btn_list, #btn_update_form, #btn_reply, #btn_delete, #btn_search{
 	width:50px;
 }
 

@@ -19,9 +19,7 @@ public class BoardListAction implements Action {
 		
 		String url = "Board/BoardList.jsp";
 		
-		BoardDAO bdao = BoardDAO.getGetInstance();
-		
-		List<BoardDTO> boardList = bdao.selectAllBoardList();
+		List<BoardDTO> boardList = BoardDAO.INSTANCE.selectAllBoardList();
 		
 		request.setAttribute("boardList", boardList);
 		

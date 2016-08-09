@@ -22,8 +22,7 @@ public class BoardSearchAction implements Action {
 		int searchType = Integer.parseInt(request.getParameter("search_type"));
 		String searchText = request.getParameter("search_text");
 		
-		BoardDAO bdao = BoardDAO.getGetInstance();
-		List<BoardDTO> boardList = bdao.selectSearchBoardList(searchType, searchText);
+		List<BoardDTO> boardList = BoardDAO.INSTANCE.selectSearchBoardList(searchType, searchText);
 		
 		request.setAttribute("boardList", boardList);
 		

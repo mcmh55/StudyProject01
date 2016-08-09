@@ -28,7 +28,7 @@
 		<input type="hidden" name="pw" value="${ board.pw }"/>
 		<input type="hidden" name="title" value="${ board.title }"/>
 		<input type="hidden" name="content" value="${ board.content }"/>
-		<input type="hidden" name="filename" value="${ board.filename }"/>
+		<input type="hidden" name="filename" value="${ board.fileName }"/>
 		
 		<table class="tbl_view">
 		<col width="100px"/><col width="500px"/>
@@ -39,8 +39,8 @@
 		<tr>
 			<th>첨부 파일</th>
 			<td>
-			<c:if test="${ board.filename != '' }">
-				<a href="">${ board.filename }</a>
+			<c:if test="${ board.fileName != '' }">
+				<a href="">${ board.fileName }</a>
 			</c:if>
 			</td>
 		</tr>
@@ -57,7 +57,8 @@
 	
 		<div class="foot">
 			<div class="area_bottom_btn">
-				<input type="button" id="btn_reply" class="btn_blue" value="답글" onclick=""/>
+				<input type="button" id="btn_reply" class="btn_blue" value="답글" 
+				onclick="location.href='boardControll?command=board_reply_form&seq=${ board.seq }'"/>
 				
 				<input type="submit" id="btn_update_form" class="btn_blue" value="수정" 
 				onclick="return checkAuthor('${ loginUser.id }', '${ board.id }')"/>

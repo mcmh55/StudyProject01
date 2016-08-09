@@ -21,10 +21,13 @@
 <body>
 
 <!-- 날짜 정보 -->
-<c:set var="objDate" value="<%= new Date() %>"></c:set>
+<c:set var="objDate" value="<%= new Date() %>"/>
 <c:set var="dateFormat" value="<%= new SimpleDateFormat(\"yyyy-MM-dd HH:mm:ss.0\") %>"/>
 <c:set var="curdate" value="${ dateFormat.format(objDate) }"/>
 <!-- //날짜 정보 -->
+
+<!-- 여백 -->
+<c:set var="tap" value="&nbsp;&nbsp;&nbsp;&nbsp;"/>
 
 <!-- 백그라운드 영역 -->
 <div class="box">
@@ -37,27 +40,45 @@
 	<tr>
 		<th>No.</th><th>제목</th><th>작성자</th><th>작성일</th><th>조회수</th>
 	<c:forEach var="board" items="${ boardList }">
-		<tr class="record">
-			<td class="seq">${ board.seq }</td>
+		<tr class="board_info">
+			<c:choose>
+				<c:when test="${ board.depth == 0 }">
+					<td class="seq">${ board.seq }</td>
+				</c:when>
+				<c:otherwise>
+					<td></td>
+				</c:otherwise>
+			</c:choose>
+			
+			<%-- <td class="seq">${ board.seq }</td> --%>
 			<td class="title">
+				<c:if test="${ board.depth > 0 }">
+					<c:forEach begin="1" end="${ board.depth }">
+						&nbsp;
+					</c:forEach>
+					<img src="images/icon_reply.gif"/>
+					<c:if test="${ board.parentDel == 1 }">
+						<font color="#6A65BB" style="font-size:10pt">[원글이 삭제된 답글]</font>
+					</c:if>
+				</c:if>
 				<a href="boardControll?command=board_view&seq=${ board.seq }">${ board.title }</a>
 			</td>
 			<td>${ board.id }</td>
 			<!-- 작성 날짜와 현재 날짜를 '연.월.일'만 비교하여 날짜가 같으면 '분:초'로 표시 / 다르면 '연.월.일'로 표시 -->
 			<c:choose>
-				<c:when test="${ board.writedate.toString().substring(0,10) == curdate.substring(0,10) }">
-					<td class="writedate">
-						<fmt:formatDate value="${ board.writedate }" pattern="HH:mm"/>
+				<c:when test="${ board.writeDate.toString().substring(0,10) == curdate.substring(0,10) }">
+					<td class="write_date">
+						<fmt:formatDate value="${ board.writeDate }" pattern="HH:mm"/>
 					</td>
 				</c:when>
 				<c:otherwise>
-					<td class="writedate">
-						<fmt:formatDate value="${ board.writedate }" pattern="yyyy.MM.dd"/>
+					<td class="write_date">
+						<fmt:formatDate value="${ board.writeDate }" pattern="yyyy.MM.dd"/>
 					</td>
 				</c:otherwise>
 			</c:choose>
 			
-			<td class="readcount">${ board.readcount }</td>
+			<td class="read_count">${ board.readCount }</td>
 		</tr>
 	</c:forEach>
 	

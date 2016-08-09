@@ -11,26 +11,17 @@ import DB.DBControll;
 import DTO.BoardDTO;
 import Interface.IBoardDAO;
 
-public class BoardDAO implements IBoardDAO {
+public enum BoardDAO implements IBoardDAO {
+	
+	INSTANCE;
 
-	private static BoardDAO instance = null;
-	
-	public static BoardDAO getGetInstance() {
-		
-		if ( instance == null ) {
-			instance = new BoardDAO();
-		}
-		
-		return instance;
-	}
-	
 	// 모든 게시글 불러오기 ※ 제외: 삭제된 글
 	@Override
 	public List<BoardDTO> selectAllBoardList() {
 		
 		String sql = "SELECT * FROM MY_BOARD "
-					+ "WHERE B_DEL = ? "
-					+ "ORDER BY B_SEQ DESC";
+					+ "WHERE B_DEL = 0 "
+					+ "ORDER BY B_GROUP DESC, B_DEPTH ASC, B_STEP ASC, B_SEQ DESC ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -44,8 +35,6 @@ public class BoardDAO implements IBoardDAO {
 			conn = DBControll.getConnection();
 			psmt = conn.prepareStatement(sql);
 			
-			psmt.setInt(1, 0);
-			
 			rs = psmt.executeQuery();
 			
 			while ( rs.next() ) {
@@ -53,13 +42,19 @@ public class BoardDAO implements IBoardDAO {
 				int i = 1;
 				bdto = new BoardDTO(
 						rs.getInt(i++),
+						rs.getInt(i++),
+						rs.getInt(i++),
+						rs.getInt(i++),
+						rs.getInt(i++),
+						rs.getInt(i++),
 						rs.getString(i++),
 						rs.getInt(i++),
 						rs.getString(i++),
 						rs.getString(i++),
 						rs.getString(i++),
 						rs.getInt(i++),
-						rs.getTimestamp(i++),
+						rs.getDate(i++),
+						rs.getInt(i++),
 						rs.getInt(i++),
 						rs.getInt(i)
 						);
@@ -81,8 +76,9 @@ public class BoardDAO implements IBoardDAO {
 	@Override
 	public BoardDTO selectOneBoard(int seq) {
 		
-		String sql = "SELECT B_SEQ, B_ID, B_PW, B_TITLE, REPLACE(B_CONTENT, CHR(10), '<br/>'), "
-				+ "B_FILENAME, B_READCOUNT, B_WRITEDATE, B_NOTICE, B_DEL FROM MY_BOARD "
+		String sql = "SELECT B_SEQ, B_GROUP, B_DEPTH, B_STEP, B_PARENT_SEQ, B_PARENT_DEL, B_ID, B_PW, B_TITLE, "
+				+ "REPLACE(B_CONTENT, CHR(10), '<br/>'), "
+				+ "B_FILENAME, B_READCOUNT, B_WRITEDATE, B_NOTICE, B_DEL, B_COMMENT_SEQ FROM MY_BOARD "
 				+ "WHERE B_SEQ = ? ";
 		
 		Connection conn = null;
@@ -104,16 +100,22 @@ public class BoardDAO implements IBoardDAO {
 				
 				int i = 1;
 				bdto = new BoardDTO(
-						rs.getInt(i++),
-						rs.getString(i++),
-						rs.getInt(i++),
-						rs.getString(i++),
-						rs.getString(i++),
-						rs.getString(i++),
-						rs.getInt(i++),
-						rs.getTimestamp(i++),
-						rs.getInt(i++),
-						rs.getInt(i)
+						rs.getInt(i++),		// B_SEQ
+						rs.getInt(i++),		// B_GROUP
+						rs.getInt(i++),		// B_DEPTH
+						rs.getInt(i++),		// B_STEP
+						rs.getInt(i++),		// B_PARENT_SEQ
+						rs.getInt(i++),		// B_PARENT_DEL
+						rs.getString(i++),	// B_ID
+						rs.getInt(i++),		// B_PW
+						rs.getString(i++),	// B_TITLE
+						rs.getString(i++),	// B_CONTENT
+						rs.getString(i++),	// B_FILENAME
+						rs.getInt(i++),		// B_READCOUNT
+						rs.getDate(i++),	// B_WRITEDATE
+						rs.getInt(i++),		// B_NOTICE
+						rs.getInt(i++),		// B_DEL
+						rs.getInt(i)		// B_COMMENT_SEQ
 						);
 			}
 			
@@ -179,9 +181,10 @@ public class BoardDAO implements IBoardDAO {
 			psmt = conn.prepareStatement(sql);
 			
 			if ( searchType == 1 ) {
-				System.out.println(sql);
+				
 				psmt.setString(1, "%" + searchText + "%");
 				psmt.setString(2, "%" + searchText + "%");
+				
 			}
 			else if ( searchType == 2 ) {	psmt.setString(1, "%" + searchText + "%"); }
 			else if ( searchType == 3) 	{	psmt.setString(1, "%" + searchText + "%"); }
@@ -193,13 +196,19 @@ public class BoardDAO implements IBoardDAO {
 				int i = 1;
 				bdto = new BoardDTO(
 						rs.getInt(i++),
+						rs.getInt(i++),
+						rs.getInt(i++),
+						rs.getInt(i++),
+						rs.getInt(i++),
+						rs.getInt(i++),
 						rs.getString(i++),
 						rs.getInt(i++),
 						rs.getString(i++),
 						rs.getString(i++),
 						rs.getString(i++),
 						rs.getInt(i++),
-						rs.getTimestamp(i++),
+						rs.getDate(i++),
+						rs.getInt(i++),
 						rs.getInt(i++),
 						rs.getInt(i)
 						);
@@ -221,10 +230,10 @@ public class BoardDAO implements IBoardDAO {
 	public boolean insertBoard(BoardDTO bdto) {
 		
 		String sql = "INSERT INTO MY_BOARD "
-					+ "(B_SEQ, B_ID, B_PW, B_TITLE, B_CONTENT, B_FILENAME, "
-					+ "B_READCOUNT, B_WRITEDATE, B_NOTICE, B_DEL) "
-					+ "VALUES(SEQ_MY_BOARD.NEXTVAL, ?, ?, ?, ?, ?, "
-					+ "0, SYSDATE, 0, 0) ";
+					+ "(B_SEQ, B_GROUP, B_DEPTH, B_STEP, B_PARENT_SEQ, B_PARENT_DEL, B_ID, B_PW, B_TITLE, "
+					+ "B_CONTENT, B_FILENAME, B_READCOUNT, B_WRITEDATE, B_NOTICE, B_DEL, B_COMMENT_SEQ) "
+					+ "VALUES(SEQ_MY_BOARD.NEXTVAL, SEQ_MY_BOARD.CURRVAL, 0, 0, 0, 0, ?, ?, ?, "
+					+ "?, ?, 0, SYSDATE, 0, 0, 0) ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -241,7 +250,7 @@ public class BoardDAO implements IBoardDAO {
 			psmt.setInt(i++, bdto.getPw());
 			psmt.setString(i++, bdto.getTitle());
 			psmt.setString(i++, bdto.getContent());
-			psmt.setString(i++, bdto.getFilename());
+			psmt.setString(i++, bdto.getFileName());
 			
 			count = psmt.executeUpdate();
 			
@@ -253,6 +262,56 @@ public class BoardDAO implements IBoardDAO {
 		
 		return count > 0 ? true : false;
 	}
+	
+	
+	// 답글 저장
+	@Override
+	public boolean insertReplyBoard(int seq, BoardDTO bdto) {
+		
+		String sql = "INSERT INTO MY_BOARD "
+					+ "(B_SEQ, B_GROUP, B_DEPTH, B_STEP, B_PARENT_SEQ, B_PARENT_DEL, B_ID, B_PW, B_TITLE, "
+					+ "B_CONTENT, B_FILENAME, B_READCOUNT, B_WRITEDATE, B_NOTICE, B_DEL, B_COMMENT_SEQ) "
+					+ "VALUES(SEQ_MY_BOARD.NEXTVAL, "
+					+ "(SELECT B_GROUP FROM MY_BOARD WHERE B_SEQ = ?), "
+					+ "(SELECT B_DEPTH FROM MY_BOARD WHERE B_SEQ = ?) + 1, "
+					+ "(SELECT NVL2(MAX(B_STEP), MAX(B_STEP)+1, 0) FROM MY_BOARD "
+					+ "WHERE B_GROUP = (SELECT B_GROUP FROM MY_BOARD WHERE B_SEQ = ?) "
+					+ "AND B_DEPTH = (SELECT B_DEPTH FROM MY_BOARD WHERE B_SEQ = ?) + 1), "
+					+ "?, 0, ?, ?, ?, ?, ?, 0, SYSDATE, 0, 0, 0) ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		int count = 0;
+		
+		try {
+			
+			conn = DBControll.getConnection();
+			psmt = conn.prepareStatement(sql);
+			
+			int i = 1;
+			psmt.setInt(i++, seq);
+			psmt.setInt(i++, seq);
+			psmt.setInt(i++, seq);
+			psmt.setInt(i++, seq);
+			psmt.setInt(i++, seq);
+			psmt.setString(i++, bdto.getId());
+			psmt.setInt(i++, bdto.getPw());
+			psmt.setString(i++, bdto.getTitle());
+			psmt.setString(i++, bdto.getContent());
+			psmt.setString(i, bdto.getFileName());
+			
+			count = psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBControll.closeDatabase(conn, psmt, null);
+		}
+		
+		return count > 0 ? true : false;
+	}
+	
 
 	// 글 수정
 	@Override
@@ -276,7 +335,7 @@ public class BoardDAO implements IBoardDAO {
 			psmt.setInt(i++, bdto.getPw());
 			psmt.setString(i++, bdto.getTitle());
 			psmt.setString(i++, bdto.getContent());
-			psmt.setString(i++, bdto.getFilename());
+			psmt.setString(i++, bdto.getFileName());
 			psmt.setInt(i, bdto.getSeq());
 			
 			count = psmt.executeUpdate();
@@ -289,14 +348,20 @@ public class BoardDAO implements IBoardDAO {
 		
 		return count > 0 ? true : false;
 	}
+	
 
 	// 글 삭제
+	@SuppressWarnings("resource")
 	@Override
 	public boolean deleteBoard(int seq) {
 		
-		String sql = "UPDATE MY_BOARD SET "
+		String sql1 = "UPDATE MY_BOARD SET "
 					+ "B_DEL = 1 "
 					+ "WHERE B_SEQ = ? ";
+		
+		String sql2 = "UPDATE MY_BOARD SET "
+					+ "B_PARENT_DEL = 1 "
+					+ "WHERE B_PARENT_SEQ = ? ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -306,18 +371,32 @@ public class BoardDAO implements IBoardDAO {
 		try {
 			
 			conn = DBControll.getConnection();
-			psmt = conn.prepareStatement(sql);
+			conn.setAutoCommit(false);
 			
+			psmt = conn.prepareStatement(sql1);
 			psmt.setInt(1, seq);
 			
-			count = psmt.executeUpdate();
+			count += psmt.executeUpdate();
+			psmt.clearParameters();
+			
+			psmt = conn.prepareStatement(sql2);
+			psmt.setInt(1, seq);
+			
+			count += psmt.executeUpdate();
 			
 		} catch (SQLException e) {
+			
+			try { conn.rollback(); } 
+			catch (SQLException e1) { e1.printStackTrace();	}
 			e.printStackTrace();
+			
 		} finally {
+			
+			try { conn.setAutoCommit(true); } 
+			catch (SQLException e) { e.printStackTrace(); }
 			DBControll.closeDatabase(conn, psmt, null);
 		}
 		
-		return count > 0 ? true : false;
+		return count > 1 ? true : false;
 	}
 }

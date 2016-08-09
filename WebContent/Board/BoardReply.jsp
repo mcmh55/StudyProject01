@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>글 작성</title>
+<title>답글 작성</title>
 
 <link rel="stylesheet" href="css/Board.css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
@@ -19,14 +19,15 @@
 <c:set var="loginUser" value="${ sessionScope.loginUser }"></c:set>
 <!-- //로그인 유저 정보 -->
 
-<div id="wrap" class="box">
+<div class="box">
 
-	<form name="frm_write" method="post" action="boardControll">
+	<form name="frm_reply" action="boardControll" method="post">
 	
-	<input type="hidden" name="command" value="board_write"/>
+	<input type="hidden" name="command" value="board_reply"/>
 	<input type="hidden" name="id" value="${ loginUser.id }"/>
+	<input type="hidden" name="seq" value="${ seq }"/>
 	
-	<table class="tbl_write">
+	<table class="tbl_reply">
 	<col width="100px"/><col width="500px"/>
 	<tr>
 		<th>작성자</th>
@@ -54,7 +55,7 @@
 	<div class="foot">
 		<div class="area_bottom_btn">
 			<input type="button" id="btn_cancel" class="btn_red" value="취소" onclick="location.href='boardControll?command=board_list'"/>
-			<input type="submit" id="btn_write" class="btn_blue" value="확인" onclick="return boardCheck()"/>
+			<input type="submit" id="btn_reply" class="btn_blue" value="확인" onclick="return boardCheck()"/>
 		</div>
 	</div>
 	

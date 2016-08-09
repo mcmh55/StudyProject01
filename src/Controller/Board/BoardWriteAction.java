@@ -21,9 +21,7 @@ public class BoardWriteAction implements Action {
 		String content = request.getParameter("content");
 		String filename = request.getParameter("filename");
 		
-		BoardDAO bdao = BoardDAO.getGetInstance();
-		
-		boolean runDB = bdao.insertBoard(new BoardDTO(id, pw, title, content, filename));
+		boolean runDB = BoardDAO.INSTANCE.insertBoard(new BoardDTO(id, pw, title, content, filename));
 		
 		if ( runDB ) {
 			new BoardListAction().execute(request, reponse);
