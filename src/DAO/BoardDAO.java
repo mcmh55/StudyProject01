@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DB.DBControll;
+import DTO.BoardCommentDTO;
 import DTO.BoardDTO;
 import Interface.IBoardDAO;
 
@@ -55,7 +56,6 @@ public enum BoardDAO implements IBoardDAO {
 						rs.getInt(i++),
 						rs.getDate(i++),
 						rs.getInt(i++),
-						rs.getInt(i++),
 						rs.getInt(i)
 						);
 				
@@ -77,9 +77,10 @@ public enum BoardDAO implements IBoardDAO {
 	public BoardDTO selectOneBoard(int seq) {
 		
 		String sql = "SELECT B_SEQ, B_GROUP, B_DEPTH, B_STEP, B_PARENT_SEQ, B_PARENT_DEL, B_ID, B_PW, B_TITLE, "
-				+ "REPLACE(B_CONTENT, CHR(10), '<br/>'), "
-				+ "B_FILENAME, B_READCOUNT, B_WRITEDATE, B_NOTICE, B_DEL, B_COMMENT_SEQ FROM MY_BOARD "
-				+ "WHERE B_SEQ = ? ";
+					+ "REPLACE(B_CONTENT, CHR(10), '<br/>'), "
+					+ "B_FILENAME, B_READCOUNT, B_WRITEDATE, B_NOTICE, B_DEL "
+					+ "FROM MY_BOARD "
+					+ "WHERE B_SEQ = ? ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -114,8 +115,7 @@ public enum BoardDAO implements IBoardDAO {
 						rs.getInt(i++),		// B_READCOUNT
 						rs.getDate(i++),	// B_WRITEDATE
 						rs.getInt(i++),		// B_NOTICE
-						rs.getInt(i++),		// B_DEL
-						rs.getInt(i)		// B_COMMENT_SEQ
+						rs.getInt(i)		// B_DEL
 						);
 			}
 			
@@ -209,7 +209,6 @@ public enum BoardDAO implements IBoardDAO {
 						rs.getInt(i++),
 						rs.getDate(i++),
 						rs.getInt(i++),
-						rs.getInt(i++),
 						rs.getInt(i)
 						);
 				
@@ -224,16 +223,16 @@ public enum BoardDAO implements IBoardDAO {
 		
 		return bdtoList;
 	}
-
+	
 	// 글 저장
 	@Override
 	public boolean insertBoard(BoardDTO bdto) {
 		
 		String sql = "INSERT INTO MY_BOARD "
 					+ "(B_SEQ, B_GROUP, B_DEPTH, B_STEP, B_PARENT_SEQ, B_PARENT_DEL, B_ID, B_PW, B_TITLE, "
-					+ "B_CONTENT, B_FILENAME, B_READCOUNT, B_WRITEDATE, B_NOTICE, B_DEL, B_COMMENT_SEQ) "
+					+ "B_CONTENT, B_FILENAME, B_READCOUNT, B_WRITEDATE, B_NOTICE, B_DEL) "
 					+ "VALUES(SEQ_MY_BOARD.NEXTVAL, SEQ_MY_BOARD.CURRVAL, 0, 0, 0, 0, ?, ?, ?, "
-					+ "?, ?, 0, SYSDATE, 0, 0, 0) ";
+					+ "?, ?, 0, SYSDATE, 0, 0) ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -263,21 +262,21 @@ public enum BoardDAO implements IBoardDAO {
 		return count > 0 ? true : false;
 	}
 	
-	
+
 	// 답글 저장
 	@Override
 	public boolean insertReplyBoard(int seq, BoardDTO bdto) {
 		
 		String sql = "INSERT INTO MY_BOARD "
 					+ "(B_SEQ, B_GROUP, B_DEPTH, B_STEP, B_PARENT_SEQ, B_PARENT_DEL, B_ID, B_PW, B_TITLE, "
-					+ "B_CONTENT, B_FILENAME, B_READCOUNT, B_WRITEDATE, B_NOTICE, B_DEL, B_COMMENT_SEQ) "
+					+ "B_CONTENT, B_FILENAME, B_READCOUNT, B_WRITEDATE, B_NOTICE, B_DEL) "
 					+ "VALUES(SEQ_MY_BOARD.NEXTVAL, "
 					+ "(SELECT B_GROUP FROM MY_BOARD WHERE B_SEQ = ?), "
 					+ "(SELECT B_DEPTH FROM MY_BOARD WHERE B_SEQ = ?) + 1, "
 					+ "(SELECT NVL2(MAX(B_STEP), MAX(B_STEP)+1, 0) FROM MY_BOARD "
 					+ "WHERE B_GROUP = (SELECT B_GROUP FROM MY_BOARD WHERE B_SEQ = ?) "
 					+ "AND B_DEPTH = (SELECT B_DEPTH FROM MY_BOARD WHERE B_SEQ = ?) + 1), "
-					+ "?, 0, ?, ?, ?, ?, ?, 0, SYSDATE, 0, 0, 0) ";
+					+ "?, 0, ?, ?, ?, ?, ?, 0, SYSDATE, 0, 0) ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -311,7 +310,7 @@ public enum BoardDAO implements IBoardDAO {
 		
 		return count > 0 ? true : false;
 	}
-	
+
 
 	// 글 수정
 	@Override
@@ -398,5 +397,97 @@ public enum BoardDAO implements IBoardDAO {
 		}
 		
 		return count > 1 ? true : false;
+	}
+	
+	
+	// 댓글 리스트 불러오기
+	@Override
+	public List<BoardCommentDTO> selectCommentList(int seq) {
+		
+		String sql = "SELECT BC_SEQ, BC_GROUP, BC_DEPTH, BC_STEP, "
+					+ "BC_PARENT_SEQ, BC_BOARD_SEQ, BC_ID, "
+					+ "REPLACE(BC_CONTENT, CHR(10), '<br/>'), "
+					+ "BC_WRITEDATE, BC_DEL "
+					+ "FROM MY_BOARD_COMMENT "
+					+ "WHERE BC_BOARD_SEQ = ? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<BoardCommentDTO> commentList = new ArrayList<BoardCommentDTO>();
+		BoardCommentDTO bcdto = null;
+		
+		try {
+			
+			conn = DBControll.getConnection();
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, seq);
+			
+			rs = psmt.executeQuery();
+			
+			while ( rs.next() ) {
+				
+				int i = 1;
+				bcdto = new BoardCommentDTO(
+							rs.getInt(i++),
+							rs.getInt(i++),
+							rs.getInt(i++),
+							rs.getInt(i++),
+							rs.getInt(i++),
+							rs.getInt(i++),
+							rs.getString(i++),
+							rs.getString(i++),
+							rs.getDate(i++),
+							rs.getInt(i++)
+							);
+				
+				commentList.add(bcdto);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBControll.closeDatabase(conn, psmt, rs);
+		}
+		
+		return commentList;
+	}
+	
+	
+	// 댓글 저장
+	@Override
+	public boolean insertComment(int seq, BoardCommentDTO bcdto) {
+		
+		String sql = "INSERT INTO MY_BOARD_COMMENT "
+					+ "(BC_SEQ, BC_GROUP, BC_DEPTH, BC_STEP, BC_PARENT_SEQ, "
+					+ "BC_BOARD_SEQ, BC_ID, BC_CONTENT, BC_WRITEDATE, BC_DEL) "
+					+ "VALUES(SEQ_MY_BOARD_COMMENT.NEXTVAL, SEQ_MY_BOARD_COMMENT.CURRVAL, 0, 0, 0, "
+					+ "?, ?, ?, SYSDATE, 0) ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		int count = 0;
+		
+		try {
+			
+			conn = DBControll.getConnection();
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, seq);
+			psmt.setString(2, bcdto.getId());
+			psmt.setString(3, bcdto.getContent());
+			
+			count = psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBControll.closeDatabase(conn, psmt, null);
+		}
+		
+		return count > 0 ? true : false;
 	}
 }

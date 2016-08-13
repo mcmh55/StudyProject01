@@ -1,7 +1,6 @@
 package Controller.Board;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,23 +9,23 @@ import javax.servlet.http.HttpServletResponse;
 
 import DAO.BoardDAO;
 import DTO.BoardCommentDTO;
-import DTO.BoardDTO;
 import Interface.Action;
 
-public class BoardViewAction implements Action {
+public class WriteCommentAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse reponse) throws ServletException, IOException {
 
 		int seq = Integer.parseInt(request.getParameter("seq"));
+		String id = request.getParameter("id");
+		String comment = request.getParameter("comment");
 		
-		BoardDTO bdto = BoardDAO.INSTANCE.selectOneBoard(seq);
-		List<BoardCommentDTO> commentList = BoardDAO.INSTANCE.selectCommentList(seq);
+		boolean result = BoardDAO.INSTANCE.insertComment(seq, new BoardCommentDTO(id, comment));
 		
-		request.setAttribute("boardView", bdto);
-		request.setAttribute("commentList", commentList);
+		String url = "boardControll?command=board_view";
 		
-		String url = "Board/BoardView.jsp";
+		request.setAttribute("seq", seq);
+		request.setAttribute("insertCommentResult", result);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, reponse);

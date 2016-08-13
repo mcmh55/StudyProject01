@@ -11,3 +11,16 @@ function checkAuthor(loginId, boardId) {
 		return false;
 	}
 }
+
+// 댓글 저장
+$(function(){
+	
+	$("#btn_write_comment").click(function(){
+		$("#command").val("board_comment");
+	});
+	
+	$("#btn_update_form").click(function(){
+		$("#command").val("board_update_form");
+	});
+	
+});

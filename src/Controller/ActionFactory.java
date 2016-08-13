@@ -34,6 +34,7 @@ public class ActionFactory {
 		else if ( command.equals("board_search") )		action = new BoardSearchAction();
 		else if ( command.equals("board_reply_form") ) 	action = new BoardReplyFormAction();
 		else if ( command.equals("board_reply") )		action = new BoardReplyAction();
+		else if ( command.equals("board_comment") )		action = new WriteCommentAction();
 		
 		return action;
 	}

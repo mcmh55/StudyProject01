@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -22,7 +22,7 @@
 
 	<form name="frm_board_view" action="boardControll" method="post">
 	
-		<input type="hidden" name="command" value="board_update_form"/>
+		<input type="hidden" id="command" name="command"/>
 		<input type="hidden" name="seq" value="${ board.seq }"/>
 		<input type="hidden" name="id" value="${ board.id }"/>
 		<input type="hidden" name="pw" value="${ board.pw }"/>
@@ -49,8 +49,33 @@
 			<td>${ board.title }</td>
 		</tr>
 		<tr>
+			<td colspan="2" style="padding: 10px;">${ board.content }</td>
+		</tr>
+		
+		<!-- 댓글 -->
+
+		<tr>
 			<td colspan="2">
-			${ board.content }
+				<table class="tbl_comment">
+				<c:forEach var="comment" items="${ commentList }">
+					<tr>
+						<td colspan="3" style="border-bottom: none;">
+							${ comment.id }&nbsp;&nbsp;
+							<fmt:formatDate value="${ comment.writeDate }" pattern="yyyy.MM.dd HH:mm"/>&nbsp;&nbsp;
+							답글
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">${ comment.content }</td>
+					</tr>
+				</c:forEach>
+				<tr>
+					<td colspan="3" style="border-bottom: none;">
+						<textarea class="textarea_comment" name="comment"></textarea>
+						<input type="submit" id="btn_write_comment" class="btn_white_square" value="등록"/>
+					</td>
+				</tr>
+				</table>
 			</td>
 		</tr>
 		</table>

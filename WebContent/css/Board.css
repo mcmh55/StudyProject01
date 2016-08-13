@@ -1,200 +1,237 @@
-body{
-	font-family:'Open Sans', sans-serif;
-	background:#3498db;
-	margin:0 auto 0 auto;  
-	width:100%; 
-	text-align:center;
-	margin:20px 0px 20px 0px;   
+body {
+	font-family: 'Open Sans', sans-serif;
+	background: #3498db;
+	margin: 0 auto 0 auto;
+	width: 100%;
+	text-align: center;
+	margin: 20px 0px 20px 0px;
 }
 
-p{
-	font-size:12px;
-	text-decoration:none;
-	color:#ffffff;
+p {
+	font-size: 12px;
+	text-decoration: none;
+	color: #ffffff;
 }
 
-h1{
-	font-size:1.5em;
-	color:#525252;
+h1 {
+	font-size: 1.5em;
+	color: #525252;
 }
 
-.box{
-	background:white;
-	width:900px;
-	border-radius:6px;
-	margin:0 auto;
-	border:4px solid #2980b9; 
+.box {
+	background: white;
+	width: 900px;
+	border-radius: 6px;
+	margin: 0 auto;
+	border: 4px solid #2980b9;
 }
 
-table{
-	width:100%;
-	border-top:2px solid #E5E5E5;
-	border-bottom:2px solid #E5E5E5;
+table {
+	width: 100%;
+	border-top: 2px solid #E5E5E5;
+	border-bottom: 2px solid #E5E5E5;
 }
 
-tr{
-	line-height:30px;
+tr {
+	line-height: 30px;
 }
 
-th{
-	font-size:11pt;
-	border-bottom:1px solid #E5E5E5;
-	border-right:1px solid #E5E5E5;
-	background-color:#F9F9F9;
+.tbl_boardList th, .tbl_write th, .tbl_update th, .tbl_reply th, .tbl_view th {
+	font-size: 11pt;
+	border-bottom: 1px solid #E5E5E5;
+	border-right: 1px solid #E5E5E5;
+	background-color: #F9F9F9;
+}
+
+.tbl_write, .tbl_update, .tbl_reply, .tbl_view td {
+	font-size: 10pt;
+	padding: 0px, 10px;
+	text-align: left;
+	
+	border-bottom: 1px solid #E5E5E5;
+}
+
+textarea {
+	width: 100%;
+	overflow: auto;
 }
 
 /* 글 리스트 */
-.seq, .write_date, .read_count{
-	font-size:10pt;
+.tbl_boardList td {
+	border-bottom: 1px solid #E5E5E5;
 }
-.title{
-	text-align:left;
-	padding-left:10px;
+
+.seq, .write_date, .read_count {
+	font-size: 10pt;
 }
-a:LINK{
-	color:black;
-	text-decoration:none;
+
+.title {
+	text-align: left;
+	padding-left: 10px;
 }
-a:VISITED{
-	color:black;
+
+a:LINK {
+	color: black;
+	text-decoration: none;
 }
-a:HOVER{
-	text-decoration:underline;
+
+a:VISITED {
+	color: black;
 }
-.area_page_num{
-	margin:10px auto;
+
+a:HOVER {
+	text-decoration: underline;
 }
-.area_search{
-	margin:0px auto;
+
+.area_page_num {
+	margin: 10px auto;
+}
+
+.area_search {
+	margin: 0px auto;
 }
 
 /* //글 리스트 */
 
 /* 글 작성, 수정 양식 */
-td{
-	border-bottom:1px solid #E5E5E5;
-}
-
-.tbl_write, .tbl_update, .tbl_reply td{
-	font-size:10pt;
-	
-	padding-left:10px;
-	text-align:left;
-}
-
-textarea{
-	width:100%;
-}
-
-.txtarea{
-	padding-right:10px;
+.txtarea {
+	padding-right: 10px;
 }
 /* //글 작성 양식 */
 
 /* 글 보기  */
-.tbl_view td{
-	font-size:10pt;
+
+.tbl_comment {
+	width: 100%;
+	padding: 10px;
 	
-	padding-left:10px;
-	text-align:left;
+	background-color: #F7F7F7;
+	border: none;
+	/* border: 1px solid black; */
+}
+
+.tbl_comment td {
+	border-bottom: 1px dashed #CBCBCB;
+}
+
+.textarea_comment {
+	width: 760px;
+	height: 40px;
+	margin: 5px 0px;
+	padding: 10px;
+	
+	border: 1px solid #E6E6E6;
+}
+
+#btn_write_comment {
+	margin: 5px 0px;
+	float: right;
 }
 /* //글 보기  */
 
 /* 버튼 */
-.foot{
-	width:100%;
-	height:100%;
+.foot {
+	width: 100%;
+	height: 100%;
 	/* border:1px solid blue; */
-	text-align:center; 
+	text-align: center;
 }
-.area_bottom_btn{
-	width:300px;
-	height:50px;
+
+.area_bottom_btn {
+	width: 300px;
+	height: 50px;
 	/* border:1px solid black; */
-	margin:0 auto;
-	display:table;
-	vertical-align:middle;
+	margin: 0 auto;
+	display: table;
+	vertical-align: middle;
 }
 
-.btn_logout, .btn_red{
-	background:#ff8080;
-	width:125px;
-	padding-top:5px;
-	padding-bottom:5px;
-	color:white;
-	border-radius:4px;
-	border:1px solid #ff5353;
-	
-	float:left;
-	margin-top:20px;
-	margin-bottom:20px;
-	margin-left:16px;
-	font-weight:800;
-	font-size:0.8em;
-	
-	cursor:pointer;
+.btn_logout, .btn_red {
+	background: #ff8080;
+	width: 125px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	color: white;
+	border-radius: 4px;
+	border: 1px solid #ff5353;
+	float: left;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-left: 16px;
+	font-weight: 800;
+	font-size: 0.8em;
+	cursor: pointer;
 }
 
-.btn_green{
-	background:#1fad3f;
-	width:125px;
-	padding-top:5px;
-	padding-bottom:5px;
-	color:white;
-	border-radius:4px;
-	border:1px solid #188731;
-	
-	margin:20px 10px 20px 10px;
-	font-weight:800;
-	font-size:0.8em;
-	
-	cursor:pointer;
+.btn_green {
+	background: #1fad3f;
+	width: 125px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	color: white;
+	border-radius: 4px;
+	border: 1px solid #188731;
+	margin: 20px 10px 20px 10px;
+	font-weight: 800;
+	font-size: 0.8em;
+	cursor: pointer;
 }
 
-.btn_blue{
-	background:#0080ff;
-	width:125px;
-	padding-top:5px;
-	padding-bottom:5px;
-	color:white;
-	border-radius:4px;
-	border:1px solid #0055aa;
-	
-	margin:20px 10px 20px 10px;
-	font-weight:800;
-	font-size:0.8em;
-	
-	cursor:pointer;
+.btn_blue {
+	background: #0080ff;
+	width: 125px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	color: white;
+	border-radius: 4px;
+	border: 1px solid #0055aa;
+	margin: 20px 10px 20px 10px;
+	font-weight: 800;
+	font-size: 0.8em;
+	cursor: pointer;
 }
 
-#btn_cancel, #btn_list, #btn_update_form, #btn_reply, #btn_delete, #btn_search{
-	width:50px;
+.btn_white_square {
+	width: 80px;
+	height: 60px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	
+	font-weight: bold;
+	font-size: 10pt;
+	color: #787878;
+	background-color: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	
+	cursor: pointer;
 }
 
-.btn:hover{
-	background:#2CC06B; 
+#btn_cancel, #btn_list, #btn_update_form, #btn_reply, #btn_delete,
+	#btn_search {
+	width: 50px;
 }
 
-.btn_member_info, .btn_write{
-	
-	background:#3498db;
-	width:125px;  
-	padding-top:5px;
-	padding-bottom:5px;
-	color:white;
-	border-radius:4px;
-	border:1px solid #2980b9;
-	
-	float:right;
-	margin-top:20px;
-	margin-bottom:20px;
-	margin-right:10px;
-	font-weight:800;
-	font-size:0.8em;
-	
-	cursor:pointer;
+.btn:hover {
+	background: #2CC06B;
 }
 
-#btn2:hover{ 
-	background:#3594D2; 
+.btn_member_info, .btn_write {
+	background: #3498db;
+	width: 125px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	color: white;
+	border-radius: 4px;
+	border: 1px solid #2980b9;
+	float: right;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-right: 10px;
+	font-weight: 800;
+	font-size: 0.8em;
+	cursor: pointer;
+}
+
+#btn2:hover {
+	background: #3594D2;
 }

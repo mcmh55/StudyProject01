@@ -23,7 +23,7 @@
 <!-- 날짜 정보 -->
 <c:set var="objDate" value="<%= new Date() %>"/>
 <c:set var="dateFormat" value="<%= new SimpleDateFormat(\"yyyy-MM-dd HH:mm:ss.0\") %>"/>
-<c:set var="curdate" value="${ dateFormat.format(objDate) }"/>
+<c:set var="curDate" value="${ dateFormat.format(objDate) }"/>
 <!-- //날짜 정보 -->
 
 <!-- 여백 -->
@@ -34,7 +34,7 @@
 
 	<h1>게시판</h1>
 	
-	<table>
+	<table class="tbl_boardList">
 	<col width="50"/><col width="300"/><col width="70"/><col width="50"/><col width="50"/>
 	
 	<tr>
@@ -66,7 +66,7 @@
 			<td>${ board.id }</td>
 			<!-- 작성 날짜와 현재 날짜를 '연.월.일'만 비교하여 날짜가 같으면 '분:초'로 표시 / 다르면 '연.월.일'로 표시 -->
 			<c:choose>
-				<c:when test="${ board.writeDate.toString().substring(0,10) == curdate.substring(0,10) }">
+				<c:when test="${ board.writeDate.toString().substring(0,10) == curDate.substring(0,10) }">
 					<td class="write_date">
 						<fmt:formatDate value="${ board.writeDate }" pattern="HH:mm"/>
 					</td>
