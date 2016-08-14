@@ -23,7 +23,7 @@
 
 	<form name="frm_board_view" action="boardControll" method="post">
 	
-		<input type="hidden" id="command" name="command"/>
+		<input type="hidden" id="command" name="command" value="board_update_form"/>
 		<input type="hidden" name="seq" value="${ board.seq }"/>
 		<input type="hidden" name="id" value="${ board.id }"/>
 		<input type="hidden" name="pw" value="${ board.pw }"/>
@@ -104,12 +104,13 @@
 		
 		<tr>
 			<td colspan="3" style="border-bottom: none;">
-			
+				
 				<input type="hidden" id="comment_count" value="${ comment_count }"/>
 				
-				<textarea class="textarea_comment_write" name="comment"></textarea>
+				<textarea id="textarea_comment_write" class="textarea_comment_write" name="comment"></textarea>
 				
-				<input type="submit" id="btn_comment_write" class="btn_white_square" value="등록"/>
+				<input type="button" id="btn_comment_write" class="btn_white_square" value="등록"
+				onclick="writeComment('${ loginUser.id }', '${ board.seq }', document.location.href)"/>
 				
 			</td>
 		</tr>
@@ -197,17 +198,6 @@ $(function(){
 	});
 });
 /* // 댓글 */ 
-
-	/* 페이지 이동 처리 */
-	$("#btn_write_comment").click(function() {
-		$("#command").val("board_comment");
-	});
-	
-	$("#btn_update_form").click(function() {
-		$("#command").val("board_update_form");
-	});
-	/* // 페이지 이동 처리 */
-
 </script>
 
 </body>

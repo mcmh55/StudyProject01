@@ -460,7 +460,7 @@ public enum BoardDAO implements IBoardDAO {
 	
 	// 댓글 저장
 	@Override
-	public boolean insertComment(int seq, BoardCommentDTO bcdto) {
+	public boolean writeComment(int boardSeq, BoardCommentDTO bcdto) {
 		
 		String sql = "INSERT INTO MY_BOARD_COMMENT "
 					+ "(BC_SEQ, BC_GROUP, BC_DEPTH, BC_STEP, BC_PARENT_SEQ, "
@@ -478,7 +478,7 @@ public enum BoardDAO implements IBoardDAO {
 			conn = DBControll.getConnection();
 			
 			psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, seq);
+			psmt.setInt(1, boardSeq);
 			psmt.setString(2, bcdto.getId());
 			psmt.setString(3, bcdto.getContent());
 			

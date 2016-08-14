@@ -12,6 +12,28 @@ function checkAuthor(loginId, boardId) {
 }
 
 
+// 댓글 작성
+function writeComment(loginId, boardSeq, refreshUrl) {
+	
+	var commentContent = $("#textarea_comment_write").val();
+	
+	$.ajax({
+		
+		url : "boardControll",
+		type: "post",
+		data : { 
+			"command" : "board_comment_write",
+			"loginId" : loginId,
+			"boardSeq" : boardSeq,
+			"commentContent" : commentContent
+		},
+		success : function() {
+			$("body").load(refreshUrl);
+		}
+	});
+}
+
+
 // 댓글 수정
 function updateComment(comment) {
 	
