@@ -400,6 +400,8 @@ public enum BoardDAO implements IBoardDAO {
 	}
 	
 	
+	//////////		댓글		//////////
+	
 	// 댓글 리스트 불러오기
 	@Override
 	public List<BoardCommentDTO> selectCommentList(int seq) {
@@ -479,6 +481,70 @@ public enum BoardDAO implements IBoardDAO {
 			psmt.setInt(1, seq);
 			psmt.setString(2, bcdto.getId());
 			psmt.setString(3, bcdto.getContent());
+			
+			count = psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBControll.closeDatabase(conn, psmt, null);
+		}
+		
+		return count > 0 ? true : false;
+	}
+
+	
+	// 댓글 수정
+	@Override
+	public boolean updateComment(int commentSeq, String commentContent) {
+		
+		String sql = "UPDATE MY_BOARD_COMMENT SET "
+					+ "BC_CONTENT = ? "
+					+ "WHERE BC_SEQ = ? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		int count = 0;
+		
+		try {
+			
+			conn = DBControll.getConnection();
+			psmt = conn.prepareStatement(sql);
+			
+			psmt.setString(1, commentContent);
+			psmt.setInt(2, commentSeq);
+			
+			count = psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBControll.closeDatabase(conn, psmt, null);
+		}
+		
+		return count > 0 ? true : false;
+	}
+
+	
+	// 댓글 삭제
+	@Override
+	public boolean deleteComment(int commentSeq) {
+		
+		String sql = "DELETE FROM MY_BOARD_COMMENT "
+					+ "WHERE BC_SEQ = ? ";
+	
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		int count = 0;
+		
+		try {
+			
+			conn = DBControll.getConnection();
+			psmt = conn.prepareStatement(sql);
+			
+			psmt.setInt(1, commentSeq);
 			
 			count = psmt.executeUpdate();
 			

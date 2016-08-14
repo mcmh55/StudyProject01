@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="css/Board.css">
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
-<script src="js/Board_List.js"></script>
+<script src="js/BoardList.js"></script>
 
 </head>
 <body>
@@ -61,7 +61,7 @@
 						<font color="#6A65BB" style="font-size:10pt">[원글이 삭제된 답글]</font>
 					</c:if>
 				</c:if>
-				<a href="boardControll?command=board_view&seq=${ board.seq }">${ board.title }</a>
+				<a href="boardControll?command=board_view&seq=${ board.seq }" class="board_title">${ board.title }</a>
 			</td>
 			<td>${ board.id }</td>
 			<!-- 작성 날짜와 현재 날짜를 '연.월.일'만 비교하여 날짜가 같으면 '분:초'로 표시 / 다르면 '연.월.일'로 표시 -->

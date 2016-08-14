@@ -18,4 +18,6 @@ public interface IBoardDAO {
 	
 	List<BoardCommentDTO> selectCommentList(int seq);
 	boolean insertComment(int seq, BoardCommentDTO bcdto);
+	boolean updateComment(int commentSeq, String commentContent);
+	boolean deleteComment(int commentSeq);
 }
