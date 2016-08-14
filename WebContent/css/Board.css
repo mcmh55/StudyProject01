@@ -121,8 +121,6 @@ textarea {
 	text-align: left;
 	
 	background-color: #F7F7F7;
-	/* border: none; */
-	/* border: 1px solid black; */
 }
 
 .comment_content {
@@ -156,7 +154,7 @@ textarea {
 .textarea_comment_write,
 .textarea_comment_update {
 	width: 760px;
-	min-height: 60px;
+	min-height: 40px;
 	padding: 10px;
 	margin: 5px 0px;
 	vertical-align: bottom;
