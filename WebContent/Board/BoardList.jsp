@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="css/Board.css">
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
-<script src="js/Board_List.js"></script>
+<script src="js/BoardList.js"></script>
 
 </head>
 <body>
@@ -23,7 +23,7 @@
 <!-- 날짜 정보 -->
 <c:set var="objDate" value="<%= new Date() %>"/>
 <c:set var="dateFormat" value="<%= new SimpleDateFormat(\"yyyy-MM-dd HH:mm:ss.0\") %>"/>
-<c:set var="curdate" value="${ dateFormat.format(objDate) }"/>
+<c:set var="curDate" value="${ dateFormat.format(objDate) }"/>
 <!-- //날짜 정보 -->
 
 <!-- 여백 -->
@@ -34,7 +34,7 @@
 
 	<h1>게시판</h1>
 	
-	<table>
+	<table class="tbl_boardList">
 	<col width="50"/><col width="300"/><col width="70"/><col width="50"/><col width="50"/>
 	
 	<tr>
@@ -61,12 +61,12 @@
 						<font color="#6A65BB" style="font-size:10pt">[원글이 삭제된 답글]</font>
 					</c:if>
 				</c:if>
-				<a href="boardControll?command=board_view&seq=${ board.seq }">${ board.title }</a>
+				<a href="boardControll?command=board_view&seq=${ board.seq }" class="board_title">${ board.title }</a>
 			</td>
 			<td>${ board.id }</td>
 			<!-- 작성 날짜와 현재 날짜를 '연.월.일'만 비교하여 날짜가 같으면 '분:초'로 표시 / 다르면 '연.월.일'로 표시 -->
 			<c:choose>
-				<c:when test="${ board.writeDate.toString().substring(0,10) == curdate.substring(0,10) }">
+				<c:when test="${ board.writeDate.toString().substring(0,10) == curDate.substring(0,10) }">
 					<td class="write_date">
 						<fmt:formatDate value="${ board.writeDate }" pattern="HH:mm"/>
 					</td>

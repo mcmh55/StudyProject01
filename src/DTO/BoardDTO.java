@@ -19,13 +19,11 @@ public class BoardDTO {
 	private Date writeDate;
 	private int notice;
 	private int del;
-	private int commentSeq;
 	
 	public BoardDTO() {}
 	
 	public BoardDTO(int seq, int group, int depth, int step, int parentSeq, int parentDel, String id, int pw,
-			String title, String content, String fileName, int readCount, Date writeDate, int notice, int del,
-			int commentSeq) {
+			String title, String content, String fileName, int readCount, Date writeDate, int notice, int del) {
 		super();
 		this.seq = seq;
 		this.group = group;
@@ -42,7 +40,6 @@ public class BoardDTO {
 		this.writeDate = writeDate;
 		this.notice = notice;
 		this.del = del;
-		this.commentSeq = commentSeq;
 	}
 
 
@@ -78,7 +75,7 @@ public class BoardDTO {
 		return "BoardDTO [seq=" + seq + ", group=" + group + ", depth=" + depth + ", step=" + step + ", parentSeq="
 				+ parentSeq + ", parentDel=" + parentDel + ", id=" + id + ", pw=" + pw + ", title=" + title
 				+ ", content=" + content + ", fileName=" + fileName + ", readCount=" + readCount + ", writeDate="
-				+ writeDate + ", notice=" + notice + ", del=" + del + ", commentSeq=" + commentSeq + "]";
+				+ writeDate + ", notice=" + notice + ", del=" + del + "]";
 	}
 
 	
@@ -200,13 +197,5 @@ public class BoardDTO {
 
 	public void setDel(int del) {
 		this.del = del;
-	}
-
-	public int getCommentSeq() {
-		return commentSeq;
-	}
-
-	public void setCommentSeq(int commentSeq) {
-		this.commentSeq = commentSeq;
 	}
 }
