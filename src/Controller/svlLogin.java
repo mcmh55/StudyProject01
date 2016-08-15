@@ -53,8 +53,9 @@ public class svlLogin extends HttpServlet{
 			MemberDTO memdto = mdao.getMember(inputID);
 			HttpSession session = request.getSession();
 			
-			// 다른 사이트로 이동하더라도 로그인 상태를 유지하기 위해 'session'에 회원 정보를 저장
 			session.setAttribute("loginUser", memdto);
+			session.setMaxInactiveInterval(60 * 60 * 24);
+			
 			request.setAttribute("msg", "로그인 성공!");
 			url = "boardControll?command=board_list";
 			
