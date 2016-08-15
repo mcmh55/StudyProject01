@@ -20,4 +20,5 @@ public interface IBoardDAO {
 	boolean writeComment(int seq, BoardCommentDTO bcdto);
 	boolean updateComment(int commentSeq, String commentContent);
 	boolean deleteComment(int commentSeq);
+	boolean replyComment(BoardCommentDTO comment);
 }

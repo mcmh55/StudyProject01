@@ -42,21 +42,21 @@ public enum BoardDAO implements IBoardDAO {
 				
 				int i = 1;
 				bdto = new BoardDTO(
-						rs.getInt(i++),
-						rs.getInt(i++),
-						rs.getInt(i++),
-						rs.getInt(i++),
-						rs.getInt(i++),
-						rs.getInt(i++),
-						rs.getString(i++),
-						rs.getInt(i++),
-						rs.getString(i++),
-						rs.getString(i++),
-						rs.getString(i++),
-						rs.getInt(i++),
-						rs.getDate(i++),
-						rs.getInt(i++),
-						rs.getInt(i)
+						rs.getInt(i++),		// B_SEQ
+						rs.getInt(i++),		// B_GROUP
+						rs.getInt(i++),		// B_DEPTH
+						rs.getInt(i++),		// B_STEP
+						rs.getInt(i++),		// B_PARENT_SEQ
+						rs.getInt(i++),		// B_PARENT_DEL
+						rs.getString(i++),	// B_ID
+						rs.getInt(i++),		// B_PW
+						rs.getString(i++),	// B_TITLE
+						rs.getString(i++),	// B_CONTENT
+						rs.getString(i++),	// B_FILENAME
+						rs.getInt(i++),		// B_READCOUNT
+						rs.getDate(i++),	// B_WRITEDATE
+						rs.getInt(i++),		// B_NOTICE
+						rs.getInt(i)		// B_DEL
 						);
 				
 				boardList.add(bdto);
@@ -195,21 +195,21 @@ public enum BoardDAO implements IBoardDAO {
 				
 				int i = 1;
 				bdto = new BoardDTO(
-						rs.getInt(i++),
-						rs.getInt(i++),
-						rs.getInt(i++),
-						rs.getInt(i++),
-						rs.getInt(i++),
-						rs.getInt(i++),
-						rs.getString(i++),
-						rs.getInt(i++),
-						rs.getString(i++),
-						rs.getString(i++),
-						rs.getString(i++),
-						rs.getInt(i++),
-						rs.getDate(i++),
-						rs.getInt(i++),
-						rs.getInt(i)
+						rs.getInt(i++),		// B_SEQ
+						rs.getInt(i++),		// B_GROUP
+						rs.getInt(i++),		// B_DEPTH
+						rs.getInt(i++),		// B_STEP
+						rs.getInt(i++),		// B_PARENT_SEQ
+						rs.getInt(i++),		// B_PARENT_DEL
+						rs.getString(i++),	// B_ID
+						rs.getInt(i++),		// B_PW
+						rs.getString(i++),	// B_TITLE
+						rs.getString(i++),	// B_CONTENT
+						rs.getString(i++),	// B_FILENAME
+						rs.getInt(i++),		// B_READCOUNT
+						rs.getDate(i++),	// B_WRITEDATE
+						rs.getInt(i++),		// B_NOTICE
+						rs.getInt(i)		// B_DEL
 						);
 				
 				bdtoList.add(bdto);
@@ -412,7 +412,7 @@ public enum BoardDAO implements IBoardDAO {
 					+ "BC_WRITEDATE, BC_DEL "
 					+ "FROM MY_BOARD_COMMENT "
 					+ "WHERE BC_BOARD_SEQ = ? "
-					+ "ORDER BY BC_WRITEDATE ASC ";
+					+ "ORDER BY BC_GROUP ASC, BC_WRITEDATE ASC ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -459,7 +459,7 @@ public enum BoardDAO implements IBoardDAO {
 	}
 	
 	
-	// 댓글 저장
+	// 댓글 작성
 	@Override
 	public boolean writeComment(int boardSeq, BoardCommentDTO bcdto) {
 		
@@ -532,7 +532,8 @@ public enum BoardDAO implements IBoardDAO {
 	@Override
 	public boolean deleteComment(int commentSeq) {
 		
-		String sql = "DELETE FROM MY_BOARD_COMMENT "
+		String sql = "UPDATE MY_BOARD_COMMENT SET "
+					+ "BC_DEL = 1 "
 					+ "WHERE BC_SEQ = ? ";
 	
 		Connection conn = null;
@@ -546,6 +547,53 @@ public enum BoardDAO implements IBoardDAO {
 			psmt = conn.prepareStatement(sql);
 			
 			psmt.setInt(1, commentSeq);
+			
+			count = psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBControll.closeDatabase(conn, psmt, null);
+		}
+		
+		return count > 0 ? true : false;
+	}
+
+	
+	// 댓글 답글 작성
+	@Override
+	public boolean replyComment(BoardCommentDTO comment) {
+		
+		String sql = "INSERT INTO MY_BOARD_COMMENT "
+					+ "(BC_SEQ, BC_GROUP, BC_DEPTH, BC_STEP, BC_PARENT_SEQ, "
+					+ "BC_BOARD_SEQ, BC_ID, BC_CONTENT, BC_WRITEDATE, BC_DEL) "
+					+ "VALUES(SEQ_MY_BOARD_COMMENT.NEXTVAL, "
+					+ "(SELECT BC_GROUP FROM MY_BOARD_COMMENT WHERE BC_SEQ = ?), "
+					+ "(SELECT BC_DEPTH FROM MY_BOARD_COMMENT WHERE BC_SEQ = ?) + 1, "
+					+ "(SELECT NVL2(MAX(BC_STEP), MAX(BC_STEP)+1, 0) FROM MY_BOARD_COMMENT "
+					+ "WHERE BC_GROUP = (SELECT BC_GROUP FROM MY_BOARD_COMMENT WHERE BC_SEQ = ?) "
+					+ "AND BC_DEPTH = (SELECT BC_DEPTH FROM MY_BOARD_COMMENT WHERE BC_SEQ = ?) + 1), "
+					+ "?, ?, ?, ?, SYSDATE, 0) ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		int count = 0;
+		
+		try {
+			
+			conn = DBControll.getConnection();
+			psmt = conn.prepareStatement(sql);
+			
+			int i = 1;
+			psmt.setInt(i++, comment.getSeq());			// BC_GROUP
+			psmt.setInt(i++, comment.getSeq());			// BC_DEPTH
+			psmt.setInt(i++, comment.getSeq());			// BC_STEP(BC_GROUP)
+			psmt.setInt(i++, comment.getSeq());			// BC_STEP(BC_DEPTH)
+			psmt.setInt(i++, comment.getSeq());			// BC_PARENT_SEQ
+			psmt.setInt(i++, comment.getBoardSeq());	// BC_BOARD_SEQ
+			psmt.setString(i++, comment.getId());		// BC_ID
+			psmt.setString(i++, comment.getContent());	// BC_CONTENT
 			
 			count = psmt.executeUpdate();
 			
