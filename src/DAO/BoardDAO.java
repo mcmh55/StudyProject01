@@ -411,7 +411,8 @@ public enum BoardDAO implements IBoardDAO {
 					+ "REPLACE(BC_CONTENT, CHR(10), '<br/>'), "
 					+ "BC_WRITEDATE, BC_DEL "
 					+ "FROM MY_BOARD_COMMENT "
-					+ "WHERE BC_BOARD_SEQ = ? ";
+					+ "WHERE BC_BOARD_SEQ = ? "
+					+ "ORDER BY BC_WRITEDATE ASC ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;

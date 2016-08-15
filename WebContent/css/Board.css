@@ -64,7 +64,7 @@ tr {
 
 textarea {
 	width: 100%;
-	overflow: hidden;
+	overflow: auto;
 }
 
 /* 글 리스트 */
@@ -121,8 +121,6 @@ textarea {
 	text-align: left;
 	
 	background-color: #F7F7F7;
-	/* border: none; */
-	/* border: 1px solid black; */
 }
 
 .comment_content {
@@ -136,36 +134,38 @@ textarea {
 	font-size: 8pt;
 }
 
-.comment_controll {
+.comment_controll_1,
+.comment_controll_2 {
 	text-align: center;
 }
 
 .comment_update,
 .comment_delete {
-	text-align: center;
-	
 	color: #6E6E6E; 
 	font-size: 8pt;
 }
 
+.comment_update_cancel {
+	color: #8080ff; 
+	font-size: 8pt;
+}
+
 .comment_update:HOVER,
-.comment_delete:HOVER {
+.comment_delete:HOVER,
+.comment_update_cancel:HOVER {
 	cursor: pointer;
 }
 
 .textarea_comment_write,
 .textarea_comment_update {
 	width: 760px;
-	min-height: 60px;
+	min-height: 40px;
+	max-height: 400px;
 	padding: 10px;
 	margin: 5px 0px;
 	vertical-align: bottom;
 	
 	border: 1px solid #E6E6E6;
-}
-
-.textarea_comment_update {
-	max-height: 200px;
 }
 
 #btn_comment_write {
