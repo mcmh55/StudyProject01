@@ -37,6 +37,7 @@ public class ActionFactory {
 		else if ( command.equals("board_comment_write") )	action = new WriteComment();
 		else if ( command.equals("board_comment_update") )	action = new UpdateComment();
 		else if ( command.equals("board_comment_delete") )	action = new DeleteComment();
+		else if ( command.equals("board_comment_reply") )	action = new ReplyComment();
 		
 		return action;
 	}

@@ -123,7 +123,8 @@ textarea {
 	background-color: #F7F7F7;
 }
 
-.comment_content {
+.comment_reply_content,
+.comment_update_content {
 	font-size: 10pt;
 	
 	border-bottom: 1px dashed #CBCBCB;
@@ -139,25 +140,33 @@ textarea {
 	text-align: center;
 }
 
+.comment_reply {
+	font-size: 8pt;
+}
+
 .comment_update,
 .comment_delete {
 	color: #6E6E6E; 
 	font-size: 8pt;
 }
 
+.comment_reply_cancel,
 .comment_update_cancel {
 	color: #8080ff; 
 	font-size: 8pt;
 }
 
+.comment_reply:HOVER,
 .comment_update:HOVER,
 .comment_delete:HOVER,
+.comment_reply_cancel:HOVER,
 .comment_update_cancel:HOVER {
 	cursor: pointer;
 }
 
 .textarea_comment_write,
-.textarea_comment_update {
+.textarea_comment_update,
+.textarea_comment_reply {
 	width: 760px;
 	min-height: 40px;
 	max-height: 400px;
@@ -166,6 +175,11 @@ textarea {
 	vertical-align: bottom;
 	
 	border: 1px solid #E6E6E6;
+}
+
+.textarea_comment_reply {
+	width: 720px;
+	margin-left: 40px;
 }
 
 #btn_comment_write {

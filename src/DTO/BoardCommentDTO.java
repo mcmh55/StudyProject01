@@ -38,6 +38,15 @@ public class BoardCommentDTO {
 		this.id = id;
 		this.content = content;
 	}
+	
+	
+	public BoardCommentDTO(int seq, int boardSeq, String id, String content) {
+		super();
+		this.seq = seq;
+		this.boardSeq = boardSeq;
+		this.id = id;
+		this.content = content;
+	}
 
 	
 	@Override
