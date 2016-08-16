@@ -406,11 +406,7 @@ public enum BoardDAO implements IBoardDAO {
 	@Override
 	public List<BoardCommentDTO> selectCommentList(int seq) {
 		
-		String sql = "SELECT BC_SEQ, BC_GROUP, BC_DEPTH, BC_STEP, "
-					+ "BC_PARENT_SEQ, BC_BOARD_SEQ, BC_ID, "
-					+ "REPLACE(BC_CONTENT, CHR(10), '<br/>'), "
-					+ "BC_WRITEDATE, BC_DEL "
-					+ "FROM MY_BOARD_COMMENT "
+		String sql = "SELECT * FROM MY_BOARD_COMMENT "
 					+ "WHERE BC_BOARD_SEQ = ? "
 					+ "ORDER BY BC_GROUP ASC, BC_WRITEDATE ASC ";
 		

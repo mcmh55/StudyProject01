@@ -16,8 +16,6 @@ public class BoardUpdateAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse reponse) throws ServletException, IOException {
 
-		String url = "Board/BoardView.jsp";
-		
 		int seq = Integer.parseInt(request.getParameter("seq"));
 		int pw = Integer.parseInt(request.getParameter("pw"));
 		String title = request.getParameter("title");
@@ -27,13 +25,13 @@ public class BoardUpdateAction implements Action {
 		boolean result = false;
 		result = BoardDAO.INSTANCE.updateBoard(new BoardDTO(seq, pw, title, content, filename));
 		
-		
 		if ( !result ) {
 			request.setAttribute("msg_alarm", "잠시 후 다시 시도해주세요.");
 		}
 		
-		BoardDTO bdto = BoardDAO.INSTANCE.selectOneBoard(seq);
-		request.setAttribute("boardView", bdto);
+		request.setAttribute("seq", seq);
+		
+		String url = "boardControll?command=board_view";
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, reponse);
