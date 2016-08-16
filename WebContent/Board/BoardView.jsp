@@ -63,7 +63,6 @@
 		<col width="90%"/><col width="5px"/>
 		
 		<c:set var="commentCount" value="0"/>
-		<% pageContext.setAttribute("newLine", "\n"); %>	<!-- c:set으로 처리하면 에러 -->
 		
 		<c:forEach var="comment" items="${ commentList }">
 			
@@ -71,7 +70,7 @@
 				
 				<c:when test="${ comment.depth == 0 && comment.del == 1 }">
 					<tr>
-						<td colspan="2">삭제된 댓글입니다.</td>
+						<td colspan="2" class="comment_delete_content">삭제된 댓글입니다.</td>
 					</tr>
 				</c:when>
 				
@@ -122,11 +121,12 @@
 					<!-- 댓글 내용 or 내용 수정 -->
 					<tr id="comment_row_2_${ commentCount + 1 }">
 						<td colspan="2" id="comment_update_content_${ commentCount + 1 }" class="comment_update_content">
-						
-							<pre id="comment_update_content${ commentCount + 1 }" style="line-height: 20px;">${ comment.content }</pre>
+							
+							<textarea id="textarea_comment_content-${ commentCount + 1 }"
+							class="textarea_comment" readonly="readonly" onfocus="this.blur()">${ comment.content }</textarea>
 							
 							<textarea id="textarea_comment_update${ commentCount + 1 }" 
-							class="textarea_comment_update">${ fn:replace(comment.content, "<br/>", newLine) }</textarea>
+							class="textarea_comment_update">${ comment.content }</textarea>
 							
 							<input type="button" id="btn_comment_update${ commentCount + 1 }" 
 							class="btn_white_square" value="수정" onclick="updateComment(this)"  
@@ -150,8 +150,6 @@
 					</tr>
 				</c:when>
 			</c:choose>
-			
-			
 			
 			<c:if test="${ comment.depth > 0 }">
 				<script type="text/javascript">
@@ -239,8 +237,7 @@ $(function(){
 		var cmtNum = cmtId.replace("comment_update", "");
 		var switchMode = "on";
 		
-		var commentContent = $("#comment_update_content" + cmtNum).html();
-		commentContent = commentContent.replace(/<br>/g,"\n");
+		var commentContent = $("#textarea_comment_content-" + cmtNum).val();
 		$("#textarea_comment_update" + cmtNum).val(commentContent);
 		
 		updateMode(switchMode, cmtNum);
@@ -265,6 +262,7 @@ $(function(){
 		updateMode(switchMode, cmtNum);
 		replyMode(switchMode, cmtNum);
 		changeOtherComment(switchMode, cmtNum, commentCount);
+		resizeTextareaHeight(commentCount, cmtNum);
 	});
 	
 	
@@ -359,7 +357,7 @@ function updateComment(comment) {
 		},
 		success : function() {
 			
-			$("#comment_update_content" + cmtNum).text(commentContent);
+			$("#textarea_comment_content-" + cmtNum).val(commentContent);
 			$("#textarea_comment_update" + cmtNum).val(commentContent);
 			
 			resizeTextareaHeight(commentCount, cmtNum);
@@ -433,12 +431,17 @@ function replyComment(comment) {
 // 댓글의 수정 모드 상태일 때의 'textarea' 높이를 입력 된 값에 맞춰 변경
 function resizeTextareaHeight() {
 	
+	// 오버로딩 사용
 	var commentCount = arguments[0];
 	var cmtNum = arguments[1];
 	
 	switch (arguments.length) {
 	case 1 :
 		for ( var i = 1; i <= commentCount; i++ ) {
+			
+			var commentHeight = $("#textarea_comment_content-" + i).prop("scrollHeight");
+			commentHeight = commentHeight + "px";
+			$("#textarea_comment_content-" + i).css("height", commentHeight);
 			
 			var textareaMinHeight = $(".textarea_comment_update").css("min-height");
 			var textareaMaxHeight = $(".textarea_comment_update").css("max-height");
@@ -459,6 +462,11 @@ function resizeTextareaHeight() {
 		break;
 		
 	case 2 :
+		
+		var commentHeight = $("#textarea_comment_content-" + cmtNum).prop("scrollHeight");
+		commentHeight = commentHeight + "px";
+		$("#textarea_comment_content-" + cmtNum).css("height", commentHeight);
+		
 		var textareaMinHeight = $(".textarea_comment_update").css("min-height");
 		var textareaMaxHeight = $(".textarea_comment_update").css("max-height");
 		var textareaHeight = $("#textarea_comment_update" + cmtNum).prop("scrollHeight");
@@ -495,7 +503,7 @@ function updateMode(switchMode, cmtNum) {
 	switch (switchMode) {
 	case "on" :
 		$("#comment_controll_1_" + cmtNum).hide();
-		$("#comment_update_content" + cmtNum).hide();
+		$("#textarea_comment_content-" + cmtNum).hide();
 		
 		$("#comment_controll_2_" + cmtNum).show();
 		$("#textarea_comment_update" + cmtNum).show();
@@ -504,7 +512,7 @@ function updateMode(switchMode, cmtNum) {
 		
 	case "off" :
 		$("#comment_controll_1_" + cmtNum).show();
-		$("#comment_update_content" + cmtNum).show();
+		$("#textarea_comment_content-" + cmtNum).show();
 		
 		$("#comment_controll_2_" + cmtNum).hide();
 		$("#textarea_comment_update" + cmtNum).hide();

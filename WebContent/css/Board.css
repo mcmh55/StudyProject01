@@ -124,7 +124,8 @@ textarea {
 }
 
 .comment_reply_content,
-.comment_update_content {
+.comment_update_content,
+.comment_delete_content {
 	font-size: 10pt;
 	
 	border-bottom: 1px dashed #CBCBCB;
@@ -162,6 +163,13 @@ textarea {
 .comment_reply_cancel:HOVER,
 .comment_update_cancel:HOVER {
 	cursor: pointer;
+}
+
+.textarea_board_content,
+.textarea_comment {
+	overflow: hidden;
+	border: none;
+	background-color: transparent;
 }
 
 .textarea_comment_write,
