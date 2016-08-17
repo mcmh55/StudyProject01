@@ -219,6 +219,8 @@ $(function(){
 	var commentCount = '${ commentCount }';
 	resizeTextareaHeight(commentCount);
 	
+	$.ajaxSetup({chche:false});
+	
 	// 모든 댓글의 답글, 수정 취소, 수정 모드 숨김
 	for ( var i = 1; i <= commentCount; i++ ) {
 		
@@ -327,7 +329,7 @@ function writeComment() {
 			"commentContent" : commentContent
 		},
 		success : function() {
-			$("body").load(refreshUrl);
+			$("body").load(refreshUrl + "&temp=" + Math.random());
 		}
 	});
 }
@@ -387,7 +389,7 @@ function deleteComment(comment) {
 			"commentSeq" : commentSeq,
 		},
 		success : function() {
-			$("body").load(refreshUrl);
+			$("body").load(refreshUrl + "&temp=" + Math.random());
 		}
 	});
 }
@@ -419,7 +421,7 @@ function replyComment(comment) {
 			"commentContent" : commentContent
 		},
 		success : function() {
-			$("body").load(refreshUrl);
+			$("body").load(refreshUrl + "&temp=" + Math.random());
 		},
 		error : function() {
 			alert("실패");
