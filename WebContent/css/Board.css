@@ -114,6 +114,26 @@ textarea {
 
 /* 글 보기  */
 
+.board_content {
+	min-height: 100px;
+	font-size: 10pt;
+	line-height: 20px;
+	color: #454545;
+}
+
+.textarea_comment {
+	/* min-height: 200px; */
+	overflow: hidden;
+	resize: none;
+	border: none;
+	
+	font-size: 10pt;
+	line-height: 20px;
+	color: #454545;
+	
+	background-color: transparent;
+}
+
 .tbl_comment {
 	width: 100%;
 	padding: 10px;
@@ -163,13 +183,6 @@ textarea {
 .comment_reply_cancel:HOVER,
 .comment_update_cancel:HOVER {
 	cursor: pointer;
-}
-
-.textarea_board_content,
-.textarea_comment {
-	overflow: hidden;
-	border: none;
-	background-color: transparent;
 }
 
 .textarea_comment_write,

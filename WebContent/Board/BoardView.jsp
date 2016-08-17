@@ -34,7 +34,7 @@
 		
 		<!-- 글 내용 영역 -->
 		<table class="tbl_view">
-		<col width="100px"/><col width="500px"/>
+		<col style="width: 15%;"/><col style="width: 85%;"/>
 		<tr>
 			<th>작성자</th>
 			<td>${ board.id }</td>
@@ -42,9 +42,9 @@
 		<tr>
 			<th>첨부 파일</th>
 			<td>
-			<c:if test="${ board.fileName != '' }">
-				<a href="">${ board.fileName }</a>
-			</c:if>
+				<c:if test="${ board.fileName != '' }">
+					<a href="">${ board.fileName }</a>
+				</c:if>
 			</td>
 		</tr>
 		<tr>
@@ -52,7 +52,9 @@
 			<td>${ board.title }</td>
 		</tr>
 		<tr>
-			<td colspan="2" style="padding: 10px;">${ board.content }</td>
+			<td colspan="2" style="padding: 10px;">
+				<pre class="board_content">${ board.content }</pre>
+			</td>
 		</tr>
 		</table>
 		<!-- // 글 내용 영역 -->
@@ -60,7 +62,7 @@
 		<!-- 댓글 리스트 영역 -->
 		
 		<table class="tbl_comment">
-		<col width="90%"/><col width="5px"/>
+		<col style="width: 90%;"/><col style="width: 10%;"/>
 		
 		<c:set var="commentCount" value="0"/>
 		
@@ -123,7 +125,7 @@
 						<td colspan="2" id="comment_update_content_${ commentCount + 1 }" class="comment_update_content">
 							
 							<textarea id="textarea_comment_content-${ commentCount + 1 }"
-							class="textarea_comment" readonly="readonly" onfocus="this.blur()">${ comment.content }</textarea>
+							class="textarea_comment" disabled="disabled">${ comment.content }</textarea>
 							
 							<textarea id="textarea_comment_update${ commentCount + 1 }" 
 							class="textarea_comment_update">${ comment.content }</textarea>
