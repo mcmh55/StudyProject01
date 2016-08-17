@@ -76,10 +76,7 @@ public enum BoardDAO implements IBoardDAO {
 	@Override
 	public BoardDTO selectOneBoard(int seq) {
 		
-		String sql = "SELECT B_SEQ, B_GROUP, B_DEPTH, B_STEP, B_PARENT_SEQ, B_PARENT_DEL, B_ID, B_PW, B_TITLE, "
-					+ "REPLACE(B_CONTENT, CHR(10), '<br/>'), "
-					+ "B_FILENAME, B_READCOUNT, B_WRITEDATE, B_NOTICE, B_DEL "
-					+ "FROM MY_BOARD "
+		String sql = "SELECT * FROM MY_BOARD "
 					+ "WHERE B_SEQ = ? ";
 		
 		Connection conn = null;
