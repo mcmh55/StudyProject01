@@ -124,8 +124,8 @@
 					<tr id="comment_row_2_${ commentCount + 1 }">
 						<td colspan="2" id="comment_update_content_${ commentCount + 1 }" class="comment_update_content">
 							
-							<textarea id="textarea_comment_content-${ commentCount + 1 }"
-							class="textarea_comment" disabled="disabled">${ comment.content }</textarea>
+							<pre id="textarea_comment_content-${ commentCount + 1 }"
+							class="textarea_comment">${ comment.content }</pre>
 							
 							<textarea id="textarea_comment_update${ commentCount + 1 }" 
 							class="textarea_comment_update">${ comment.content }</textarea>
@@ -241,7 +241,7 @@ $(function(){
 		var cmtNum = cmtId.replace("comment_update", "");
 		var switchMode = "on";
 		
-		var commentContent = $("#textarea_comment_content-" + cmtNum).val();
+		var commentContent = $("#textarea_comment_content-" + cmtNum).text();
 		$("#textarea_comment_update" + cmtNum).val(commentContent);
 		
 		updateMode(switchMode, cmtNum);
@@ -252,6 +252,8 @@ $(function(){
 		
 		textareaHeightTemp = $("#textarea_comment_update" + cmtNum).prop("scrollHeight");
 		resizeTextareaHeight(commentCount);
+		
+		$("#textarea_comment_update" + cmtNum).focus();
 	});
 	
 	
@@ -283,6 +285,8 @@ $(function(){
 		switchMode = "off";
 		updateMode(switchMode, cmtNum);
 		changeOtherComment(switchMode, cmtNum, commentCount);
+		
+		$("#textarea_comment_reply-" + cmtNum).focus();
 	});
 	
 	
@@ -361,7 +365,7 @@ function updateComment(comment) {
 		},
 		success : function() {
 			
-			$("#textarea_comment_content-" + cmtNum).val(commentContent);
+			$("#textarea_comment_content-" + cmtNum).text(commentContent);
 			$("#textarea_comment_update" + cmtNum).val(commentContent);
 			
 			resizeTextareaHeight(commentCount, cmtNum);
@@ -443,10 +447,6 @@ function resizeTextareaHeight() {
 	case 1 :
 		for ( var i = 1; i <= commentCount; i++ ) {
 			
-			var commentHeight = $("#textarea_comment_content-" + i).prop("scrollHeight");
-			commentHeight = commentHeight + "px";
-			$("#textarea_comment_content-" + i).css("height", commentHeight);
-			
 			var textareaMinHeight = $(".textarea_comment_update").css("min-height");
 			var textareaMaxHeight = $(".textarea_comment_update").css("max-height");
 			var textareaHeight = $("#textarea_comment_update" + i).prop("scrollHeight");
@@ -466,10 +466,6 @@ function resizeTextareaHeight() {
 		break;
 		
 	case 2 :
-		
-		var commentHeight = $("#textarea_comment_content-" + cmtNum).prop("scrollHeight");
-		commentHeight = commentHeight + "px";
-		$("#textarea_comment_content-" + cmtNum).css("height", commentHeight);
 		
 		var textareaMinHeight = $(".textarea_comment_update").css("min-height");
 		var textareaMaxHeight = $(".textarea_comment_update").css("max-height");
